@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: standards
 
-;; $Id: uuid.el,v 1.1 2007/06/02 15:58:44 jemarch Exp $
+;; $Id: uuid.el,v 1.1.1.1 2007/06/02 15:58:44 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 

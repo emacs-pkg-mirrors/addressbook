@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: addressbook.el,v 1.1 2007/06/02 15:58:41 jemarch Exp $
+;; $Id: addressbook.el,v 1.1.1.1 2007/06/02 15:58:41 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
