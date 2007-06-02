@@ -1,0 +1,19 @@
+-*- mode:text -*- Time-stamp: "07/05/05 04:32:44 jemarch"
+
+README for AddressBook
+======================
+
+AddresBook is a implementation of an addressbook for Emacs that makes
+use of the vCard standard to store contact information.
+
+The homepage of the addressbook is hosted in the Emacs Wiki:
+
+   http://www.emacswiki.org/cgi-bin/wiki/AddressBook
+
+Development resources are currently hosted in the GNU Womb:
+
+   http://savannah.gnu.org/projects/womb
+
+
+Send bug reports and suggestions to jemarch@gnu.org
+

@@ -1,0 +1,186 @@
+2007-05-31  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* vcard.el: FSF address updated in copyright notice.
+
+	* COPYING: New file.
+
+2007-05-30  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* uuid.el: New file.
+	(uuid): New group.
+	(uuid-ifconfig-program): New custom.
+	(uuid-hexoctect-regexp): New variable.
+	(uuid-time-low-regexp): New variable.
+	(uuid-time-mid-regexp): New variable.
+	(uuid-version-and-time-high-regexp): New variable.
+	(uuid-variant-and-clock-seqhigh-regexp): New variable.
+	(uuid-clock-seq-low-regexp): New variable.
+	(uuid-node-regexp): New variable.
+	(uuid-regexp): New variable.
+	(uuid-time-based-version-hex): New variable.
+	(uuid-dce-security-version-hex): New variable.
+	(uuid-name-based-md5-version-hex): New variable.
+	(uuid-name-based-sha1-version-hex): New variable.
+	(uuid-random-number-based-version-hex): New variable.
+	(uuid-namespace-dns): New variable.
+	(uuid-namespace-url): New variable.
+	(uuid-namespace-oid): New variable.
+	(uuid-namespace-x500): New variable.
+	(uuid-generate): New function.
+	(uuid-generate-name-based): New function.
+	(uuid-generate-random-based): New function.
+	(uuid-generate-time-based): New function.
+	(uuid-generate-time): New function.
+	(uuid-generate-clock-sequence): New function.
+	(uuid-format-mac-address): New function.
+	(uuid-get-mac-address): New function.
+	(uuid-namespace-to-string): New function.
+	(uuidp): New function.
+	(uuid-lessp): New function.
+	(uuid-equal): New function.
+
+2007-05-27  Xavier Maillard  <xma@gnu.org>
+
+	* addressbook.el (addrbook-summary-mode): Bind <up> and <down> to
+	respectively previous and next contact. Bind 'a' to contact creation.
+
+2007-05-15  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* addressbook.el (addrbook-backend): New customize.
+	(addrbook-directory): New customize.
+	(addrbook-be-read-cards): New function.
+	(addrbook-be-write-card): New function.
+	(addrbook-be-delete-card): New function.
+
+2007-05-10  Xavier Maillard  <xma@gnu.org>
+
+	* addressbook.el (addrbook-contact-display-attribute-photo-logo):
+	Introduce url package again so that we can fetch local or remote
+	image. Only require url when we are sure we need it and use
+	string-as-unibyte to get data.
+	(addrbook): Added :link property
+
+2007-05-09  Jose E. Marchesi  <jose.marchesi@deimos-space.com>
+
+	* addressbook.el: outline-mode like headlines
+
+2007-05-08  Xavier Maillard  <xma@gnu.org>
+
+	* vcard.el (vcard-parse-file): New helper function used in addrbook-import-vcard.
+
+	* addressbook.el (addrbook-bury): New function.
+	(addrbook-summary-mode, addrbook-contact-mode): Bind b key to
+	addrbook-bury.
+	(addrbook-write-data-1): New function. Take one VCARD and write
+	its data in a FILE.
+	(addrbook-import-vcard, addrbook-export-vcard): New functions. Use
+	it. Import and Export VCARDs from addrbook-summary buffer.
+	(addrbook-summary-mode): Bind i and x to import/export.
+	(addrbook-contact-display-attribute-photo-logo): Dropped misuse of
+	the url package and replace it with simpler functions. No longer
+	require url package.
+
+	* Makefile: Completely rewritten to follow standards. Added
+	several new target to build and to install the manual.
+	Added license header and CVS tag.
+
+2007-05-08  Jose E. Marchesi  <jose.marchesi@deimos-space.com>
+
+	* addressbook.el (addrbook-summary-display): expand line to
+	frame-width. Do not fill with blanks. Append a extra newline to
+	the buffer in order to let the line highlight overlay trick to
+	work in the last entry.
+	(addrbook-summary-goto-contact): Make the contact buffer writable
+	before card displaying. Trick to expand the overlay to the entire
+	line without filling with blanks.
+	(addrbook-summary): Remove call to `addrbook-open'.
+	(addrbook-summary-show-contact): Make the contact buffer read only.
+	(addrbook-contact-delete-attribute): renamed from
+	`addrbook-contact-delete-attribute-type'
+	(addrbook-contact-mode): Use `addrbook-contact-delete-attribute'.
+	(addressbook): Show summary when the buffer exists.
+	(addrbook-multiple-frames-p): New custom variable.
+	(addrbook-show-contact): Take care about `addrbook-multiple-frames-p'.
+	(addrbook-show-summary): idem.
+	(addrbook-ask-for-search): Changed default to nil.
+
+2007-05-07  Xavier Maillard  <xma@gnu.org>
+
+        * Makefile: New file.
+	
+2007-05-07  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* addressbook.el (addrbook-summary-mode): Added mailer function to
+	the summary.
+	Sources reestructured.
+	(addrbook-summary-display): renamed from `addrbook-summary-redisplay'
+	(addrbook-quit): Fixed.
+	(addrbook-get-prop-index): New function.
+
+2007-05-06  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* addressbook.el: `addrbook-custom-properties' removed.
+	(addrbook-build-custom-property-group): New function.
+	(addrbook-set-custom-properties): New function.
+	(addrbook-set-custom-properties): Added doc string.
+	(addrbook-ask-for-search): New customizable variable.
+	(addrbook-attr-matches-p): New function.
+	(addrbook-search-cards): New function.
+	(addressbook-summary): Made non-interactive.
+	(addrbook-summary-get-current-card): New function.
+	(addrbook-summary-next-card): New function.
+	(addrbook-summary-previous-card): New function.
+	(addrbook-contact): New function.
+
+2007-05-05  Xavier Maillard  <xma@gnu.org>
+
+	* addressbook.el: Do not require 'cl at run-time.
+	(addrbook-mode-line-string, addrbook-summary-mode-line-string):
+	New variables. Use them in *-set-mode-line (still needs attention).
+	(addressbook-summary): Fixed autoload cookie.
+
+2007-05-05  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* addressbook.el (addrbook-open): New function.
+	(addressbook): Use `addrbook-open'.
+ 
+	* README: Added urls to web resources
+
+	* addressbook.el (addrbook-get-prop-fields): use
+	`addrbook-get-prop-fields'
+	(addrbook-get-prop-parameters): simplified
+	(addrbook-property-in-group-p): simplified
+	(addrbook-get-prop-default-type): simplified
+	(addrbook-value-empty-p): simplified
+	(addrbook-number-of-values): simplified
+	(addrbook-get-card-fn): simplified
+	(addrbook-attribute-nodisplay): simplified
+	(addrbook-display-attribute-photo-logo): simplified
+	(addrbook-display-attribute-type): simplified
+	(addrbook-group-hidden-p): simplified
+	(addrbook-hide-show-group): simplified
+	(addrbook-get-current-group): simplified
+	(addrbook-get-text-property-line): simplified
+	(addrbook-redisplay-group): simplified
+	(addrbook-group-in-display-p): simplified
+	(addrbook-read-cards): simplified
+	(addrbook-add-attribute-type): simplified
+	(addrbook-remove-attribute-type): simplified
+	(addrbook-delete-card): simplified
+	(addrbook-add-attribute): simplified
+	(addrbook-next-card): simplified
+	(addrbook-previous-card): simplified
+	(addrbook-quit): simplified
+	(addrbook-goto-next-group): simplified
+	(addrbook-toggle-hide-show-group): simplified
+	(addrbook-hide-all-groups): simplified
+	(addrbook-show-all-groups): simplified
+	(addrbook-cycle-groups): simplified
+	(addrbook-fast-selection): simplified
+	(addrbook-select-group): simplified
+	(addrbook-select-property): simplified
+	(addrbook-select-field): simplified
+	(addressbook): simplified
+
+	* New ChangeLog
+
