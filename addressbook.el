@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: addressbook.el,v 1.1 2007/06/02 15:58:41 jemarch Exp $
+;; $Id: addressbook.el,v 1.2 2007/07/11 22:42:24 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1940,6 +1940,16 @@ This function stores the retrieved vCard information in
     (addrbook-be-multiple-delete-card card-id))
    (t
     (error "No valid addressbook backend selected."))))
+
+(defun addrbook-be-card-modified (card-id)
+  "Tell the backend a given card has been modified"
+  (cond
+   ((equal addrbook-backend 'addrbook-backend-simple)
+    (addrbook-be-simple-card-modified card-id))
+   ((equal addrbook-backend 'addrbook-backend-multiple)
+    (addrbook-be-multiple-card-modified card-id))
+   (t
+    (error "No valid addressbookº  backend selected."))))
   
 ;;;; ** Simple backend
 
