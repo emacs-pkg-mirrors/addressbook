@@ -1,11 +1,11 @@
 ;;;; uuid.el --- Universal Unique Identifiers
 
-;; Copyright (C) 2007 Jose E. Marchesi
+;; Copyright (C) 2007, 2008 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: standards
 
-;; $Id: uuid.el,v 1.1 2007/06/02 15:58:44 jemarch Exp $
+;; $Id: uuid.el,v 1.2 2008/05/08 19:45:35 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -221,8 +221,8 @@ method."
         hash
         (name-sequence "")
         i)
-    ;; Convert the name to a canonical sequence of octets (as defined by the standards or conventions of its
-    ;; name space).
+    ;; Convert the name to a canonical sequence of octets (as defined
+    ;; by the standards or conventions of its name space).
     (dotimes (i (length name))
       (setq name-sequence
             (concat name-sequence (format "%.2x" (aref name i)))))
@@ -456,7 +456,7 @@ If no MAC address is found, then return nil."
    (format "%.4x" (nth 0 namespace))
    (format "%.4x" (nth 1 namespace))
    (format "%.4x" (nth 2 namespace))
-   (format "%.4x" (nth 3 namespace))
+g   (format "%.4x" (nth 3 namespace))
    (format "%.4x" (nth 4 namespace))
    (format "%.4x" (nth 5 namespace))
    (format "%.4x" (nth 6 namespace))
