@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi <jemarch@gnu.org>
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.1 2008/05/08 19:45:34 jemarch Exp $
+;; $Id: abook.el,v 1.2 2008/06/09 20:38:17 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1635,7 +1635,7 @@ previous content."
   (or (addrbook-be-read-cards)
       (addrbook-create-card-2)))
 
-(defun addrbook-get-text-property-line (prop)
+(defun vcard-mode-get-text-property-line (prop)
   "Return the value of text property PROP in the nearest position on current line
 that has PROP defined as a text property"
   (let ((current-point (get-text-property (point) prop))
@@ -1648,7 +1648,7 @@ that has PROP defined as a text property"
             (get-text-property next-point-with-prop prop)
           (get-text-property previous-point-with-prop prop)))))
 
-(defun addrbook-erase-tagged-region (tag)
+(defun vcard-mode-erase-tagged-region (tag)
   "Erase the region tagged with the same TAG value"
   (let ((begin-pos (previous-single-property-change (point) tag))
         (end-pos (next-single-property-change (point) tag)))

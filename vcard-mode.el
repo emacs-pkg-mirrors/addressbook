@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi <jemarch@gnu.org>
 ;; Keyword: contacts, applications
 
-;; $Id: vcard-mode.el,v 1.1 2008/05/08 19:45:35 jemarch Exp $
+;; $Id: vcard-mode.el,v 1.2 2008/06/09 20:38:17 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -40,6 +40,29 @@
   '(identification-properties)
   "Groups to expand by default"
   :type 'sexp
+  :group 'vcard)
+
+(defcustom vcard-mode-display-images t
+  "Display images in the vcard buffer"
+  :type 'boolean
+  :group 'vcard)
+
+(defcustom vcard-mode-display-groups
+  '(identification-properties)
+  "Groups to expand by default"
+  :type 'sexp
+  :group 'vcard)
+
+(defcustom vcard-mode-attribute-indentation
+  1
+  "Indentation deep for attribute titles"
+  :type 'integer
+  :group 'vcard)
+
+(defcustom vcard-mode-field-indentation
+  2
+  "Indentation deep for attribute fields"
+  :type 'integer
   :group 'vcard)
 
 ;;;; Faces
@@ -122,6 +145,25 @@
 
 (defvar vcard-mode-properties-nodisplay
   '("sound" "agent" "version" "uid" "label" "mailer" "uid"))
+
+(defvar vcard-mode-image-types
+  '(("gif" nil)
+    ("cgm" nil)
+    ("wmf" nil)
+    ("bmp" nil)
+    ("met" nil)
+    ("pbm" pbm)
+    ("dib" nil)
+    ("pict" nil)
+    ("tiff" nil)
+    ("pdf" nil)
+    ("ps" postscript)
+    ("jpeg" jpeg)
+    ("mpeg" nil)
+    ("mpeg2" nil)
+    ("avi" nil)
+    ("qtime" nil))
+  "Association between vCard image types and emacs image types")
 
 (defvar vcard-mode-properties
   '((identification-properties
@@ -267,6 +309,13 @@
      ?s))
   "vCard specification standard properties")
 
+(defvar vcard-mode-required-attrs '("n")
+  "List of required attributes")
+
+(defvar vcard-mode-general-params
+  '(("url" "value") ("content-id" "value"))
+  "General vCard parameters")
+
 ;;;; Display functions
 
 (defun vcard-mode-display-card (vcard-data)
@@ -352,9 +401,9 @@
     (save-excursion
       (goto-char (point-min))
       (if (get-text-property (point) 'title)
-          (addrbook-erase-tagged-region 'title))
+          (vcard-mode-erase-tagged-region 'title))
       (insert (propertize
-               (addrbook-get-card-fn t)
+               (vcard-mode-get-card-fn t)
                'face 'vcard-mode-title
                'title t)))))
 
@@ -376,10 +425,10 @@ When ressource is of type URL, we use url package to get the image data."
     ;; Insert photo in buffer
     ;; Determine emacs image type
     (setq image-type
-          (cadr (assoc photo-type addrbook-image-types)))
+          (cadr (assoc photo-type vcard-mode-image-types)))
 
     ;; Display the image or a link
-    (when (and addrbook-display-images
+    (when (and vcard-mode-display-images
                (display-images-p)
                image-type
                (image-type-available-p image-type)
@@ -431,7 +480,7 @@ When ressource is of type URL, we use url package to get the image data."
     (if prop-fields
         (progn
           ;; Insert attribute fields instead of name
-          (insert (make-string addrbook-attribute-indentation ?\ ))
+          (insert (make-string vcard-mode-attribute-indentation ?\ ))
           (insert (propertize prop-title
                               'face 'vcard-mode-attribute-title-name
                               'attr-compound-title t
@@ -445,8 +494,8 @@ When ressource is of type URL, we use url package to get the image data."
                        (not (equal value "")))
                   (progn
                     (insert (make-string
-                             (+ addrbook-field-indentation
-                                addrbook-attribute-indentation)
+                             (+ vcard-mode-field-indentation
+                                vcard-mode-attribute-indentation)
                              ?\ ))
                     (insert (propertize (nth i prop-fields)
                                         'face 'vcard-mode-attribute-title-name
@@ -497,7 +546,7 @@ When ressource is of type URL, we use url package to get the image data."
       (insert " ")
       (insert "(")
       (insert (propertize
-               (addrbook-list-to-csv printable-type-list)
+               (vcard-mode-list-to-csv printable-type-list)
                'face 'vcard-mode-attribute-type))
       (insert ")"))))
 
@@ -540,14 +589,14 @@ When ressource is of type URL, we use url package to get the image data."
 
 (defun vcard-mode-get-current-attr-index ()
   "Return the attribute index of the attribute displayed in the current line"
-  (addrbook-get-text-property-line 'attr-index))
+  (vcard-mode-get-text-property-line 'attr-index))
 
 (defun vcard-mode-get-current-attr-subindex ()
   "Return the attribute subindex of the attribute displayed in the current line"
-  (addrbook-get-text-property-line 'attr-subindex))
+  (vcard-mode-get-text-property-line 'attr-subindex))
 
 (defun vcard-mode-get-current-attr-compound-title ()
-  (addrbook-get-text-property-line 'attr-compound-title))
+  (vcard-mode-get-text-property-line 'attr-compound-title))
 
 (defun vcard-mode-goto-group (group)
   "Leave the point at the beginning of GROUP"
@@ -571,7 +620,7 @@ When ressource is of type URL, we use url package to get the image data."
 (defun vcard-mode-redisplay-card ()
   "Redisplay current card"
   (erase-buffer)
-  (vcard-mode-display-card addrbook-current-card))
+  (vcard-mode-display-card vcard-mode-data))
 
 (defun vcard-mode-redisplay-group (group)
   "Redisplay GROUP in the screen"
@@ -585,11 +634,11 @@ When ressource is of type URL, we use url package to get the image data."
 
 (defun vcard-mode-erase-group-region ()
   "Erase the region used by the group in point"
-  (addrbook-erase-tagged-region 'group-region))
+  (vcard-mode-erase-tagged-region 'group-region))
 
 (defun vcard-mode-erase-attr-region ()
   "Erase the region used by the attribute in point"
-  (addrbook-erase-tagged-region 'attr-region))
+  (vcard-mode-erase-tagged-region 'attr-region))
 
 (defun vcard-mode-redisplay-attr-at-point ()
   "Redisplay the attribute at point"
@@ -618,11 +667,32 @@ When ressource is of type URL, we use url package to get the image data."
 (defun vcard-mode-photo-displayed-p ()
   (next-single-property-change (point-min) 'identification-photo))
 
+(defun vcard-mode-erase-tagged-region (tag)
+  "Erase the region tagged with the same TAG value"
+  (let ((begin-pos (previous-single-property-change (point) tag))
+        (end-pos (next-single-property-change (point) tag)))
+    (if (equal (point) (point-min))
+        (setq begin-pos (point-min))
+      (if (not (equal (get-text-property (point) tag)
+                      (get-text-property (- (point) 1) tag)))
+          (setq begin-pos (point))))
+    (if (equal (point) (point-max))
+        (setq end-pos (point-max))
+      (if (not (equal (get-text-property (point) tag)
+                      (get-text-property (+ (point) 1) tag)))
+          (setq end-pos (+ point 1))))
+    (cond ((and begin-pos end-pos)
+           (delete-region begin-pos end-pos))
+          ((and begin-pos (not end-pos))
+           (delete-region begin-pos (point-max)))
+          ((and (not begin-pos) end-pos)
+           (delete-region (point-min) end-pos)))))
+
 ;;;; Properties Management
 
 (defun vcard-mode-get-group (group-symbol)
   "Return the sexp containing information for GROUP"
-  (assoc group-symbol addrbook-properties))
+  (assoc group-symbol vcard-mode-properties))
 
 (defun vcard-mode-get-group-symbol (group)
   (nth 0 group))
@@ -639,9 +709,9 @@ When ressource is of type URL, we use url package to get the image data."
 (defun vcard-mode-group-has-properties-p (group)
   (let ((group-attrs (vcard-mode-get-group-props group))
         (result nil))
-    (dolist (attr (addrbook-get-card addrbook-current-card))
+    (dolist (attr vcard-mode-data)
       (if (and (vcard-mode-property-in-group-p attr group-attrs)
-               (not (member (vcard-attr-get-name attr) addrbook-contact-properties-nodisplay)))
+               (not (member (vcard-attr-get-name attr) vcard-mode-properties-nodisplay)))
           (setq result t)))
     result))
 
@@ -704,7 +774,7 @@ When ressource is of type URL, we use url package to get the image data."
 
 (defun vcard-mode-get-property (attr-name)
   (let (group result)
-    (dolist (group addrbook-properties)
+    (dolist (group vcard-mode-properties)
       (let* ((group-props (vcard-mode-get-group-props group))
              (group-prop (vcard-mode-get-group-prop group-props attr-name)))
         (if group-prop
@@ -717,31 +787,15 @@ When ressource is of type URL, we use url package to get the image data."
     (when prop-type
       (car (car prop-type)))))
 
-(defun addrbook-get-card (numcard)
-  (nth numcard addrbook-cards))
-
-(defun addrbook-set-card (numcard card)
-  (if addrbook-cards
-      (cond
-       ((and (>= numcard 0) (< numcard (length addrbook-cards)))
-        (setcar (nthcdr numcard addrbook-cards) card))
-       ((>= numcard (length addrbook-cards))
-        (setq addrbook-cards (append addrbook-cards (list card)))))
-    (setq addrbook-cards (list card))))
-
-(defun addrbook-remove-card (numcard)
-  (setq addrbook-cards (delete (addrbook-get-card numcard)
-                               addrbook-cards)))
-
-(defun addrbook-value-empty-p (values)
+(defun vcard-mode-value-empty-p (values)
   "Return t if VALUES is empty"
   (when (listp values)
     (if (cdr values)
         (when (equal (car values) "")
-          (addrbook-value-empty-p (cdr values)))
+          (vcard-mode-value-empty-p (cdr values)))
       (equal (car values) ""))))
 
-(defun addrbook-number-of-values (values)
+(defun vcard-mode-number-of-values (values)
   (if (listp values)
       (let (value
             (nov 0))
@@ -750,7 +804,7 @@ When ressource is of type URL, we use url package to get the image data."
               (setq nov (+ nov 1)))))
     1))
 
-(defun addrbook-get-card-fn (&optional with-aka card-number)
+(defun vcard-mode-get-card-fn (&optional with-aka card-number)
   (let* ((card vcard-mode-data)
          (name-attr (vcard-get-named-attribute card "n"))
          (name-attr-values (vcard-attr-get-values name-attr))
@@ -796,7 +850,7 @@ When ressource is of type URL, we use url package to get the image data."
                            "(" name-aka ")")))
     result))
 
-(defun addrbook-delete-attr (attr-index attr-subindex)
+(defun vcard-mode-delete-attr (attr-index attr-subindex)
   (let* ((card vcard-mode-data)
          (attr (vcard-get-attribute card attr-index))
          (attr-value (vcard-attr-get-values attr)))
@@ -805,19 +859,19 @@ When ressource is of type URL, we use url package to get the image data."
           ;; Delete the field from the values
           (setcar (nthcdr attr-subindex attr-value) "")
           (vcard-attr-set-values attr attr-value)
-          (if (addrbook-value-empty-p attr-value)
-              (addrbook-set-card addrbook-current-card (vcard-delete-indexed-attribute card attr-index))))
+          (if (vcard-mode-value-empty-p attr-value)
+              (setq vcard-mode-data (vcard-delete-indexed-attribute card attr-index))))
       ;; Delete the attribute
-      (addrbook-set-card addrbook-current-card (vcard-delete-indexed-attribute card attr-index)))))
+      (setq vcard-mode-data (vcard-delete-indexed-attribute card attr-index)))))
 
-(defun addrbook-build-custom-property-group ()
+(defun vcard-mode-build-custom-property-group ()
   "Return an empty custom property group"
   (list 'custom-properties
         "Custom Properties"
         nil
         ?c))
 
-(defun addrbook-set-custom-properties (props-data)
+(defun vcard-mode-set-custom-properties (props-data)
 "This function accepts a list of the form:
 
   (PROP1 PROP2 ... PROPN)
@@ -841,8 +895,8 @@ where each field FIELD is defined with the following structure:
     (dolist (prop props-data)
       (setcar prop (concat "x-emacs-" (car prop))))
     (when (not (vcard-mode-get-group 'custom-properties))
-      (setq addrbook-properties
-            (append addrbook-properties (list (addrbook-build-custom-property-group)))))
+      (setq vcard-mode-properties
+            (append vcard-mode-properties (list (vcard-mode-build-custom-property-group)))))
     (setq custom-group (vcard-mode-get-group 'custom-properties))
     (setcar (nthcdr 2 custom-group) props-data)))
 
@@ -866,7 +920,7 @@ where each field FIELD is defined with the following structure:
                (property (vcard-mode-get-property attr-name))
                (prop-types (vcard-mode-get-prop-parameter property "type")))
           (if prop-types
-              (let ((new-type (addrbook-select-non-existing-type attr))
+              (let ((new-type (vcard-mode-select-non-existing-type attr))
                     type result)
                 (dolist (type prop-types)
                   (if (equal (cadr type)
@@ -881,7 +935,7 @@ where each field FIELD is defined with the following structure:
                   ;; Redisplay attribute
                   (vcard-mode-redisplay-attr-at-point)
                   ;; Addressbook modified
-                  (add-to-list 'addrbook-modified-cards addrbook-current-card))))))
+                  (add-to-list 'addrbook-modified-cards vcard-mode-data))))))
     (goto-char point-backup)))
 
 (defun vcard-mode-remove-attribute-type ()
@@ -903,7 +957,7 @@ where each field FIELD is defined with the following structure:
               (if (and (equal (length (vcard-attr-get-parameter attr "type")) 1)
                        (vcard-mode-prop-parameter-is-mandatory property "type"))
                   (message "This attribute should have a type")
-                (let ((new-type (addrbook-select-existing-type attr))
+                (let ((new-type (vcard-mode-select-existing-type attr))
                       type result)
                   (dolist (type prop-types)
                     (if (equal (cadr type)
@@ -915,7 +969,7 @@ where each field FIELD is defined with the following structure:
                     ;; Redisplay attribute
                     (vcard-mode-redisplay-attr-at-point)
                     ;; Addressbook modified
-                    (add-to-list 'addrbook-modified-cards addrbook-current-card)))))))
+                    (add-to-list 'addrbook-modified-cards vcard-mode-data)))))))
     (goto-char point-backup)))
 
 (defun vcard-mode-delete-attribute ()
@@ -945,16 +999,16 @@ where each field FIELD is defined with the following structure:
                              "? "))
              elt)
         (if (yes-or-no-p prompt)
-            (if (and (member attr-name addrbook-required-attrs)
+            (if (and (member attr-name vcard-mode-required-attrs)
                      (or (vcard-mode-get-current-attr-compound-title)
-                         (equal (addrbook-number-of-values attr-value) 1)))
+                         (equal (vcard-mode-number-of-values attr-value) 1)))
                 (error "Trying to delete a required attribute")
-              (addrbook-delete-attr attr-index attr-subindex)
+              (vcard-mode-delete-attr attr-index attr-subindex)
               (if (not (equal attr-name "photo"))
                   (vcard-mode-redisplay-group group-symbol)
                 (vcard-mode-redisplay-card))))))
   (goto-char point-backup)
-  (add-to-list 'addrbook-modified-cards addrbook-current-card)))
+  (add-to-list 'addrbook-modified-cards vcard-mode-data)))
 
 (defun vcard-mode-add-attribute ()
   "Add a new attribute to the current card"
@@ -964,10 +1018,10 @@ where each field FIELD is defined with the following structure:
          group-symbol
          group group-attrs
          (i 0)
-         (current-card (addrbook-get-card addrbook-current-card)))
+         (current-card vcard-mode-data))
     ;; Get group
     (setq group-symbol (or (vcard-mode-get-current-group)
-                           (addrbook-select-group)))
+                           (vcard-mode-select-group)))
     (setq group (vcard-mode-get-group group-symbol))
     (setq group-attrs (vcard-mode-get-group-props group))
     (if group-symbol
@@ -978,7 +1032,7 @@ where each field FIELD is defined with the following structure:
           (if (and attr-index attr-subindex)
               (let ((attr (vcard-get-attribute current-card attr-index)))
                 (setq property-name (vcard-attr-get-name attr)))
-            (setq property-name (addrbook-select-property group-symbol)))
+            (setq property-name (vcard-mode-select-property group-symbol)))
           (if property-name
               (let* ((property (vcard-mode-get-group-prop group-attrs property-name))
                      (property-title (vcard-mode-get-prop-title property))
@@ -987,7 +1041,7 @@ where each field FIELD is defined with the following structure:
                      (continue t))
                 ;; Get field
                 (when property-fields
-                  (setq field-index (addrbook-select-field group-symbol property-name))
+                  (setq field-index (vcard-mode-select-field group-symbol property-name))
                   (setq continue field-index))
                 (when continue
                   ;; Ask for a new value for the property or field
@@ -1027,7 +1081,7 @@ where each field FIELD is defined with the following structure:
                       (if (equal new-attr-name "photo")
                           (vcard-attr-set-property new-attr "value" "url"))
                       (setq current-card (vcard-add-attribute current-card new-attr))))
-                  (addrbook-set-card addrbook-current-card current-card)
+                  (setq vcard-mode-data current-card)
                   (if (vcard-mode-in-display-p group-symbol)
                       (progn
                         ;; Redisplay the group with new contents
@@ -1147,13 +1201,35 @@ where each field FIELD is defined with the following structure:
   
 ;;;; Utility functions
 
+(defun vcard-mode-get-text-property-line (prop)
+  "Return the value of text property PROP in the nearest position on current line
+that has PROP defined as a text property"
+  (let ((current-point (get-text-property (point) prop))
+        (next-point-with-prop (next-single-property-change
+                               (point) prop nil (line-end-position)))
+        (previous-point-with-prop (previous-single-property-change
+                                   (point) prop nil (line-beginning-position))))
+    (or current-point
+        (if next-point-with-prop
+            (get-text-property next-point-with-prop prop)
+          (get-text-property previous-point-with-prop prop)))))
+
+(defun vcard-mode-list-to-csv (list)
+  (let ((result "")
+        i)
+    (dotimes (i (length list))
+      (setq result (concat result (nth i list)))
+      (if (not (equal i (- (length list) 1)))
+          (setq result (concat result ","))))
+    result))
+
 (defun vcard-mode-make-params-explicit ()
   "Make unambiguous anonymous params explicit.
 
-It uses `addrbook-general-params' and the type parameter for each property
-defined in `addrbook-properties'"
+It uses `vcard-mode-general-params' and the type parameter for each property
+defined in `vcard-mode-properties'"
   (let ((i 0))
-    (dolist (card addrbook-cards)
+    (let ((card vcard-mode-data))
       (dotimes (i (vcard-get-num-attributes card))
         (let* ((attr (vcard-get-attribute card i))
                (attr-name (vcard-attr-get-name attr))
@@ -1173,7 +1249,7 @@ defined in `addrbook-properties'"
                                   param)))
               ;; Search the param name in general-value
               (if (not param-name)
-                  (let* ((general-param (assoc param-value addrbook-general-params))
+                  (let* ((general-param (assoc param-value vcard-mode-general-params))
                          (general-param-name (if general-param (cadr general-param)))
                          (prop-types (vcard-mode-get-prop-parameter property "type")))
                     (if general-param-name
@@ -1201,10 +1277,10 @@ Each character should identify only one name."
          (ncol (/ (- (window-width) 4) fwidth))
          name count result char i key-list)
     (save-window-excursion
-      (set-buffer (get-buffer-create " *AddrBook Groups*"))
+      (set-buffer (get-buffer-create " *vcard-mode Groups*"))
       (delete-other-windows)
       (split-window-vertically)
-      (switch-to-buffer-other-window (get-buffer-create " *AddrBook Groups*"))
+      (switch-to-buffer-other-window (get-buffer-create " *vcard-mode Groups*"))
       (erase-buffer)
       (insert prompt ":")
       (insert "\n\n")
@@ -1291,7 +1367,7 @@ Each character should identify only one name."
   "Select a group interactively and return its symbol"
   (let (names group group-elt letter result)
     ;; Build the names list
-    (dolist (group-elt addrbook-properties)
+    (dolist (group-elt vcard-mode-properties)
       (setq names
             (cons (list (vcard-mode-get-group-name group-elt)
                         (vcard-mode-get-group-letter group-elt))
@@ -1299,7 +1375,7 @@ Each character should identify only one name."
     (setq names (reverse names))
     ;; Call the fast menu function to get the desired group
     (setq letter (vcard-mode-fast-selection names "Select group"))
-    (dolist (group-elt addrbook-properties)
+    (dolist (group-elt vcard-mode-properties)
       (if (and (vcard-mode-get-group-letter group-elt)
                (equal letter (vcard-mode-get-group-letter group-elt)))
           (setq result (vcard-mode-get-group-symbol group-elt))))
@@ -1312,7 +1388,7 @@ Each character should identify only one name."
          names attr attr-elt letter result)
     ;; Build the names list
     (dolist (prop group-props)
-      (if (and (not (member (vcard-mode-get-prop-name prop) addrbook-required-attrs))
+      (if (and (not (member (vcard-mode-get-prop-name prop) vcard-mode-required-attrs))
                (vcard-mode-get-prop-letter prop))
           (setq names
                 (cons (list (vcard-mode-get-prop-title prop)
