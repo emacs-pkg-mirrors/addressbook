@@ -1,3 +1,9 @@
+2009-02-13  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el: Use vcard-mode-display-card.
+
+	* README: Updated.
+
 2007-05-31  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* vcard.el: FSF address updated in copyright notice.

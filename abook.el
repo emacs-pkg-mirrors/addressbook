@@ -1,11 +1,11 @@
-;;;; addressbook.el --- A simple addressbook using vcard-mode
+;;;; abook.el --- A simple addressbook using vcard-mode
 
 ;; Copyright (C) 2007, 2008 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi <jemarch@gnu.org>
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.2 2008/06/09 20:38:17 jemarch Exp $
+;; $Id: abook.el,v 1.3 2009/02/13 17:03:11 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1185,7 +1185,7 @@ The format is as described in the variable `addrbook-summary-format'"
         (save-excursion
           (set-buffer (get-buffer addrbook-contact-buffer-name))
           (let (buffer-read-only)
-            (addrbook-contact-display-card numcard)))))))
+            (vcard-mode-display-card numcard)))))))
 
 (defun addrbook-summary-get-current-card ()
   (get-text-property (point) 'card-index))
@@ -1219,7 +1219,7 @@ The format is as described in the variable `addrbook-summary-format'"
     (when (not (get-buffer addrbook-contact-buffer-name))
       (save-excursion
         (addrbook-create-contact-buffer)
-        (addrbook-contact-display-card card-index)
+        (vcard-mode-display-card card-index)
         (setq buffer-read-only t)))
     (addrbook-show-contact)))
 
@@ -1305,7 +1305,7 @@ Commands:
       (add-to-list 'addrbook-modified-cards current-card)
       (if (equal (length addrbook-cards) 0)
           (addrbook-quit)
-        (addrbook-contact-display-card current-card)))))
+        (vcard-mode-display-card current-card)))))
 
 (defun addrbook-create-card ()
   "Create a new card"
@@ -1313,7 +1313,7 @@ Commands:
   (let ((buffer-read-only nil)
         (new-card-index (addrbook-create-card-2)))
     (if new-card-index
-        (addrbook-contact-display-card new-card-index))))
+        (vcard-mode-display-card new-card-index))))
 
 (defun addrbook-create-card-2 ()
   "Create a new card with minimum identification properties and insert it
@@ -1439,7 +1439,7 @@ If optional VCARD parameter is not set, use `addrbook-current-card'."
   (let (buffer-read-only window-list win)
     (if (equal addrbook-current-card (- (length addrbook-cards) 1))
         (message "No more cards")
-      (addrbook-contact-display-card (+ addrbook-current-card 1))
+      (vcard-mode-display-card (+ addrbook-current-card 1))
       (let ((summary-buffer (get-buffer addrbook-summary-buffer)))
         (when summary-buffer
           (setq window-list (get-buffer-window-list summary-buffer nil t))
@@ -1453,7 +1453,7 @@ If optional VCARD parameter is not set, use `addrbook-current-card'."
   (let (buffer-read-only)
     (if (equal addrbook-current-card 0)
         (message "First card")
-      (addrbook-contact-display-card (- addrbook-current-card 1))
+      (vcard-mode-display-card (- addrbook-current-card 1))
       (let ((summary-buffer (get-buffer addrbook-summary-buffer)))
         (when summary-buffer
           (setq window-list (get-buffer-window-list summary-buffer nil t))
@@ -1907,7 +1907,7 @@ attributes."
                   (throw 'exit t))
                 ;; Goto the first card with matched data
                 (addrbook-create-contact-buffer)
-                (addrbook-contact-display-card show-card-index)
+                (vcard-mode-display-card show-card-index)
                 (setq addrbook-modified-cards nil)
                 (switch-to-buffer-other-window (get-buffer addrbook-contact-buffer-name))
                 (setq buffer-read-only t)
