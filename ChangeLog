@@ -1,3 +1,13 @@
+2009-02-24  Xavier Maillard  <xma@gnu.org>
+
+	* vcard-mode.el (vcard-mode-properties-nodisplay): Remove
+	duplicate uid field.
+	(vcard-mode-data): New variable (fix void-variable error).
+	(vcard-mode-properties): Add "pcs" in "tel" properties (bind it to
+	?p). Change "preferred" to use ?f (like favourite) and "facsimile"
+	to use ?x.
+	(vcard-mode-required-attrs): Add version and fn to conform with RFC.
+
 2009-02-13  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el: Use vcard-mode-display-card.
