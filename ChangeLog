@@ -8,6 +8,8 @@
 	to use ?x.
 	(vcard-mode-required-attrs): Add version and fn to conform with RFC.
 
+	* All files: update headers.
+
 2009-02-13  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el: Use vcard-mode-display-card.

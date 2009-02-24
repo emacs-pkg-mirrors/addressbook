@@ -1,11 +1,11 @@
 ;;;; vcard-mode.el --- Major mode for vcard editing
 
-;; Copyright (C) 2008 Jose E. Marchesi
+;; Copyright (C) 2008, 2009 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi <jemarch@gnu.org>
 ;; Keyword: contacts, applications
 
-;; $Id: vcard-mode.el,v 1.3 2009/02/23 23:52:18 zeDek Exp $
+;; $Id: vcard-mode.el,v 1.4 2009/02/24 22:53:12 zeDek Exp $
 
 ;; This file is NOT part of GNU Emacs.
 

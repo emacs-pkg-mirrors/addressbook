@@ -1,11 +1,11 @@
 ;;;; abook.el --- A simple addressbook using vcard-mode
 
-;; Copyright (C) 2007, 2008 Jose E. Marchesi
+;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi <jemarch@gnu.org>
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.3 2009/02/13 17:03:11 jemarch Exp $
+;; $Id: abook.el,v 1.4 2009/02/24 22:53:12 zeDek Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -64,7 +64,7 @@
 ;;
 ;; * General commands (usable from all addressbook modes)
 ;; * Backend management
-;; 
+;;
 ;; ** Customization and Variables
 ;; ** Utility functions
 ;; ** API
@@ -1501,7 +1501,7 @@ If optional VCARD parameter is not set, use `addrbook-current-card'."
 
 (defcustom addrbook-backend
   'addrbook-backend-simple
-  "Backend to use for the addressbook. 
+  "Backend to use for the addressbook.
 
 Currently there are two backends available: `addrbook-backend-simple' (simple backend
 to store all contacts in one file) and `addrbook-backend-multiple' (that stores one contact per file in
@@ -1552,7 +1552,7 @@ defined in `addrbook-properties'"
 (defun addrbook-be-read-cards ()
   "Read cards from an addressbook backend.
 
-This function stores the retrieved vCard information in 
+This function stores the retrieved vCard information in
 `addrbook-cards'."
   (cond
    ((equal addrbook-backend 'addrbook-backend-simple)
@@ -1594,7 +1594,7 @@ This function stores the retrieved vCard information in
     (addrbook-be-multiple-card-modified card-id))
    (t
     (error "No valid addressbookº  backend selected."))))
-  
+
 ;;;; ** Simple backend
 
 (defcustom addrbook-file "~/.addressbook"
