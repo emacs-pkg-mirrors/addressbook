@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.6 2009/03/05 14:08:26 jemarch Exp $
+;; $Id: abook.el,v 1.7 2009/03/05 14:29:48 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -711,7 +711,7 @@ where each field FIELD is defined with the following structure:
 
 ;;;; ** Constants
 
-(defconst abook-contact-buffer-name "*AddressBook Contact*"
+(defconst abook-contact-buffer-name "*ABook Contact*"
   "Name of the buffer for the addressbook contact editor")
 
 ;;;; ** Variables
@@ -1436,7 +1436,7 @@ Commands:
 
 ;;;; ** Constants
 
-(defconst abook-summary-buffer-name "*AddressBook Summary*"
+(defconst abook-summary-buffer-name "*ABook Summary*"
   "Name of the buffer for the addressbook summary")
 
 ;;;; ** Variables
@@ -1614,7 +1614,7 @@ Commands:
   (define-key abook-summary-mode-map "x" 'abook-export-vcard)
   (define-key abook-summary-mode-map "m" 'abook-send-email)
   (use-local-map abook-summary-mode-map)
-  (setq mode-name "AddressBook Summary")
+  (setq mode-name "ABook Summary")
   (setq major-mode 'abook-summary-mode))
 
 ;;;; * General commands (usable from all addressbook modes)
