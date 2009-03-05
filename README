@@ -1,4 +1,4 @@
--*- mode:text -*- Time-stamp: "09/02/13 18:26:23 jemarch"
+-*- mode:text -*- Time-stamp: "09/03/05 14:58:32 jemarch"
 
 README for AddressBook
 ======================
@@ -15,5 +15,5 @@ Development resources are hosted in savannah:
    http://savannah.nongnu.org/projects/addressbook
 
 
-Please send bug reports and suggestions to jemarch@gnu.org
+Send bug reports and suggestions to jemarch@gnu.org
 

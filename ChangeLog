@@ -1,20 +1,9 @@
-2009-02-24  Xavier Maillard  <xma@gnu.org>
+2009-03-05  Jose E. Marchesi  <jemarch@gnu.org>
 
-	* vcard-mode.el (vcard-mode-properties-nodisplay): Remove
-	duplicate uid field.
-	(vcard-mode-data): New variable (fix void-variable error).
-	(vcard-mode-properties): Add "pcs" in "tel" properties (bind it to
-	?p). Change "preferred" to use ?f (like favourite) and "facsimile"
-	to use ?x.
-	(vcard-mode-required-attrs): Add version and fn to conform with RFC.
-
-	* All files: update headers.
-
-2009-02-13  Jose E. Marchesi  <jemarch@gnu.org>
-
-	* abook.el: Use vcard-mode-display-card.
-
-	* README: Updated.
+	* addressbook.el: Relicensed as GPLv3+.
+	Copyright notification updated.
+	(addrbook-file): Use ~/.abook as the standard file containing the
+	addressbook, since ~/.addressbook is being used by pine.
 
 2007-05-31  Jose E. Marchesi  <jemarch@gnu.org>
 
@@ -125,7 +114,7 @@
 2007-05-07  Xavier Maillard  <xma@gnu.org>
 
         * Makefile: New file.
-	
+
 2007-05-07  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* addressbook.el (addrbook-summary-mode): Added mailer function to

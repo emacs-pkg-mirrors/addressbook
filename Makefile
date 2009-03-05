@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009  Xavier Maillard  <xma@gnu.org>
-#                                 Jose E. Marchesi <jemarch@gnu.org>
+# Copyright (C) 2007  Xavier Maillard  <xma@gnu.org>
+#                     Jose E. Marchesi <jemarch@gnu.org>
 
 # This file is NOT part of GNU Emacs.
 
@@ -18,7 +18,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-# $Id: Makefile,v 1.2 2009/02/24 22:53:12 zeDek Exp $
+# $Id: Makefile,v 1.3 2009/03/05 14:02:49 jemarch Exp $
 
 # make install
 # make all

@@ -1,11 +1,11 @@
 ;;;; uuid.el --- Universal Unique Identifiers
 
-;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
+;; Copyright (C) 2007 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: standards
 
-;; $Id: uuid.el,v 1.3 2009/02/24 22:53:12 zeDek Exp $
+;; $Id: uuid.el,v 1.4 2009/03/05 14:02:50 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -177,7 +177,7 @@ then a standarized alternative random method is used."
   (list #x6BA7 #xB814
         #x9DAD
         #x11D1
-        #x80B4 #x00C0 #x4FD4 #x30C8)
+        #x80B4 #x00C0 #x4FD4 #x30C8)        
   "ITU X.667 recommended namespace for directory names")
 
 ;;;###autoload
@@ -221,8 +221,8 @@ method."
         hash
         (name-sequence "")
         i)
-    ;; Convert the name to a canonical sequence of octets (as defined
-    ;; by the standards or conventions of its name space).
+    ;; Convert the name to a canonical sequence of octets (as defined by the standards or conventions of its
+    ;; name space).
     (dotimes (i (length name))
       (setq name-sequence
             (concat name-sequence (format "%.2x" (aref name i)))))
@@ -232,7 +232,7 @@ method."
     ;; is from 0 to 15, as specified in IETF RFC 1321 (for MD5) and as
     ;; specified in FIPS PUB 180-2 for SHA-1.
     (cond
-     ((equal type 'name-sha1)
+     ((equal type 'name-sha1) 
       (error "Name-based type method sha1 not implemented"))
      ((equal type 'name-md5)
       (setq hash (md5 (concat (uuid-namespace-to-string namespace)
@@ -242,7 +242,7 @@ method."
 
     ;; Set octets 3 through 0 of the "TimeLow" field to octets 3
     ;; through 0 of the hash value.
-    (setq time-low
+    (setq time-low 
           (concat (format "%.2x" 0)
                   (substring hash 26)))
     ;; Set octets 1 and 0 of the "TimeMid" field to octets 5 and 4 of
@@ -273,10 +273,10 @@ method."
             variant-and-clock-seq-high
             clock-seq-low "-"
             node)))
-
+  
 (defun uuid-generate-random-based ()
   "Generate and return a random-based uuid"
-  (let (time-low
+  (let (time-low 
         time-mid
         version-and-time-high
         clock-seq-low
@@ -289,17 +289,17 @@ method."
     ;; Set the four most significant bits (bits 15 through 12) of the
     ;; "VersionAndTimeHigh" field to the four-bit version number
     ;; specified in 12.2.
-    (setq version-and-time-high
+    (setq version-and-time-high 
           (concat uuid-random-number-based-version-hex
                   (format "%.3x" (random (expt 2 12)))))
     ;; Set all the other bits of the UUID to randomly (or
     ;; pseudo-randomly) generated values.
-    (setq time-low
+    (setq time-low 
           (concat (format "%.4x" (random (expt 2 16)))
                   (format "%.4x" (random (expt 2 16)))))
-    (setq time-mid
+    (setq time-mid 
           (format "%.4x" (random (expt 2 16))))
-    (setq clock-seq-low
+    (setq clock-seq-low 
           (format "%.2x" (random (expt 2 8))))
     (setq node
           (concat
@@ -317,42 +317,42 @@ method."
   "Generate and return a time-based uuid"
   ;; Determine the values for the UTC-based Time and the Clock
   ;; Sequence to be used in the UUID, as specified in 12.3 and 12.4.
-  (let (time
+  (let (time 
         clock-sequence
         time-low time-mid version-and-time-high clock-seq-low
         variant-and-clock-seq-high
         node)
     ;; For the purposes of this algorithm, consider Time to be a
     ;; 60-bit unsigned integer and the Clock Sequence to be a 14-bit
-    ;; unsigned integer.
+    ;; unsigned integer. 
     (setq time (uuid-generate-time))
     (setq clock-sequence (uuid-generate-clock-sequence))
     ;; Set the "TimeLow" field equal to the least significant 32 bits
     ;; (bits 31 through 0) of Time in the same order of significance.
-    (setq time-low
-          (concat
+    (setq time-low 
+          (concat 
            (format "%.3x" (logand #x000FF (nth 1 time)))
            (format "%.5x" (nth 2 time))))
     ;; Set the "TimeMid" field equal to bits 47 through 32 from the
     ;; Time in the same order of significance.
     (setq time-mid
-          (concat
+          (concat 
            (format "%.2x" (logand #x0007F (nth 0 time)))
            (format "%.2x" (ash (nth 1 time) -12))))
-
+                  
     ;; Set the 12 least significant bits (bits 11 through 0) of the
     ;; "VersionAndTimeHigh" field equal to bits 59 through 48 from
     ;; Time in the same order of significance.
     ;; Set the four most significant bits (bits 15 through 12) of the
     ;; "VersionAndTimeHigh" field to the four-bit version number
     ;; specified in 12.2.
-    (setq version-and-time-high
+    (setq version-and-time-high 
           (concat uuid-time-based-version-hex
                   (format "%.3x" (ash (nth 0 time) -7))))
     ;; Set the "ClockSeqLow" field to the eight least significant bits
     ;; (bits 7 through 0) of the Clock Sequence in the same order of
     ;; significance.
-    (setq clock-seq-low
+    (setq clock-seq-low 
           (format "%.2x" (logand #x000F clock-sequence)))
     ;; Set the six least significant bits (bits 5 through 0) of the
     ;; "VariantAndClockSeqHigh" field to the six most significant bits
@@ -368,7 +368,7 @@ method."
       (if mac-address
           (setq node (uuid-format-mac-address mac-address))
         ;; Use a random number
-        (setq node
+        (setq node 
               (concat
                (format "%.4x" (random (expt 2 16)))
                (format "%.4x" (random (expt 2 16)))
@@ -379,7 +379,7 @@ method."
             variant-and-clock-seq-high
             clock-seq-low "-"
             node)))
-
+  
 (defun uuid-generate-time ()
   "Return the number of 100 nanosecond intervals of UTC since the beginning
 of the Gregorian calendar (00:00:00, 15 October 1582).
@@ -396,7 +396,7 @@ NOTE: we use a resolution of seconds in this code."
   ;; October 1582) and the epoch (00:00:00, 1 January 1970):
   ;; 0x1B21DD213814000
 
-  ;; Operate with 20-bit numbers (GNU Emacs assures integers are
+  ;; Operate with 20-bit numbers (GNU Emacs assures integers are 
   ;; at least 29 bits wide and 20/4 = 5)
   (let ((greg-epoch-offset-high #x1B21D)
         (greg-epoch-offset-mid #xD2138)
@@ -426,13 +426,13 @@ that is _not_ derivated from the Node."
 (defun uuid-format-mac-address (mac-addr)
   "Format MAC-ADDR (a valid MAC address) to a raw hex format"
   (downcase (replace-regexp-in-string ":" "" mac-addr)))
-
+   
 (defun uuid-get-mac-address ()
   "Return a suitable MAC address from a network card in the host computer.
 If no MAC address is found, then return nil."
   (when (file-executable-p uuid-ifconfig-program)
     (save-excursion
-      (with-temp-buffer
+      (with-temp-buffer 
         (call-process uuid-ifconfig-program nil t nil "-a")
         (goto-char (point-min))
         (when (re-search-forward "HWaddr " nil t)
@@ -449,19 +449,19 @@ If no MAC address is found, then return nil."
                                      uuid-hexoctect-regexp) nil t)
           (buffer-substring (match-beginning 0)
                             (match-end 0)))))))
-
+                                
 (defun uuid-namespace-to-string (namespace)
   "Return the hex string representation of NAMESPACE"
   (concat
    (format "%.4x" (nth 0 namespace))
    (format "%.4x" (nth 1 namespace))
    (format "%.4x" (nth 2 namespace))
-g   (format "%.4x" (nth 3 namespace))
+   (format "%.4x" (nth 3 namespace))
    (format "%.4x" (nth 4 namespace))
    (format "%.4x" (nth 5 namespace))
    (format "%.4x" (nth 6 namespace))
    (format "%.4x" (nth 7 namespace))))
-
+  
 ;;;###autoload
 (defun uuidp (uuid)
   "Return t if UUID is a valid uuid"
