@@ -1,6 +1,6 @@
 \input texinfo
 @c %**start of header
-@setfilename abook.info
+@setfilename addressbook.info
 @settitle Addressbook Manual
 
 @set VERSION 0.1
@@ -96,16 +96,16 @@ new version.
 @node Installation, Configuration, Getting the program, Top
 @section Installation
 
-Make @file{abook.el} and @file{vcard.el} loadable to your emacs (put the
+Make @file{addrbook.el} and @file{vcard.el} loadable to your emacs (put the
 files in a directory contained in your @code{load-path}).
 
 You can customize the addressbook using the customize interface. If
 you dont like to use customize, take a look into the sources for
 interesting variables.
 
-The most important variable to set is @code{abook-file}, that contain
+The most important variable to set is @code{addrbook-file}, that contain
 the file where you store your contacts (a collection of vCards). It
-defaults to @file{~/.abook}.
+defaults to @file{~/.addressbook}.
 
 @node Configuration, Contacts, Installation, Top
 @section Configuration
@@ -122,10 +122,10 @@ There are several ways to access the addressbook:
 
 @itemize @bullet
 @item
-Opening the interactive interface calling the interactive function @code{abook}
+Opening the interactive interface calling the interactive function @code{addressbook}
 @item
 Inserting a new contact without open the interactive interface calling
-the interactive function @code{abook-create}
+the interactive function @code{addressbook-create}
 @item
 Using the addressbook API (see FIXME:)
 @item
