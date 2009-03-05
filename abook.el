@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.9 2009/03/05 20:28:40 jemarch Exp $
+;; $Id: abook.el,v 1.10 2009/03/05 20:58:31 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1546,6 +1546,15 @@ The format is as described in the variable `abook-summary-format'"
 (defun abook-summary-get-current-card ()
   (get-text-property (point) 'card-index))
 
+(defun abook-summary-refresh ()
+  "Refresh the summary screen"
+  (let ((card-index (abook-summary-get-current-card))
+        (column-backup (current-column))
+        (buffer-read-only nil))
+    (abook-summary-display)
+    (abook-summary-goto-contact card-index t)
+    (goto-char (+ (line-beginning-position) column-backup))))
+
 ;;;; ** Commands
 
 (defun abook-summary-next-contact ()
@@ -1567,6 +1576,22 @@ The format is as described in the variable `abook-summary-format'"
       (abook-summary-goto-contact (- (length abook-cards) 1) t))
      (t
       (abook-summary-goto-contact (- card-index 1) t)))))
+
+(defun abook-summary-create-vcard ()
+  ""
+  (interactive)
+  (abook-create-vcard))
+
+(defun abook-summary-import-vcard (filename)
+  "Import vCard from FILENAME and add it into our contact database and return the
+index of the last imported card from the file."
+  (interactive
+   (list
+    (expand-file-name
+     (read-file-name "vCard file to import: "))))
+
+  (abook-import-vcard filename)
+  (abook-summary-refresh))
 
 (defun abook-summary-show-contact ()
   "Open an addressbook buffer to show the current selected card"
@@ -1609,8 +1634,8 @@ Commands:
   (define-key abook-summary-mode-map (kbd "RET") 'abook-summary-show-contact)
   (define-key abook-summary-mode-map "b" 'abook-bury)
   (define-key abook-summary-mode-map "q" 'abook-quit)
-  (define-key abook-summary-mode-map "a" 'abook-create-card)
-  (define-key abook-summary-mode-map "i" 'abook-import-vcard)
+  (define-key abook-summary-mode-map "a" 'abook-summary-create-vcard)
+  (define-key abook-summary-mode-map "i" 'abook-summary-import-vcard)
   (define-key abook-summary-mode-map "x" 'abook-export-vcard)
   (define-key abook-summary-mode-map "m" 'abook-send-email)
   (use-local-map abook-summary-mode-map)
@@ -1663,15 +1688,15 @@ Commands:
           (abook-quit)
         (abook-contact-display-card current-card)))))
 
-(defun abook-create-card ()
+(defun abook-create-vcard ()
   "Create a new card"
   (interactive)
   (let ((buffer-read-only nil)
-        (new-card-index (abook-create-card-2)))
+        (new-card-index (abook-create-vcard-2)))
     (if new-card-index
         (abook-contact-display-card new-card-index))))
 
-(defun abook-create-card-2 ()
+(defun abook-create-vcard-2 ()
   "Create a new card with minimum identification properties and insert it
 into `abook-cards'.
 
@@ -1705,12 +1730,8 @@ Return the index position of the new card"
       new-card-index)))
 
 (defun abook-import-vcard (filename)
-  "Import vCard from FILENAME and add it into our contact database and return index card number."
-  (interactive
-   (list
-    (expand-file-name
-     (read-file-name "vCard file to import: "))))
-
+  "Import vCard from FILENAME and add it into our contact database and return the
+index of the last imported card from the file."
   (let ((index nil)
 	vcard)
     (abook-be-read-cards)

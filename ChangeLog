@@ -2,6 +2,10 @@
 
 	* abook.el (abook-import-vcard): Import all the vcards found in
 	the file and not just the first one.
+	(abook-import-vcard): Docstring fixed.
+	(abook-summary-create-vcard): New function.
+	(abook-summary-import-vcard): New function.
+	(abook-contact-redisplay-attr-at-point): New function.
 
 	* Makefile: Updated to use the new abook.* files.
 
