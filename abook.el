@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.8 2009/03/05 20:16:58 jemarch Exp $
+;; $Id: abook.el,v 1.9 2009/03/05 20:28:40 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1721,6 +1721,7 @@ Return the index position of the new card"
               (dolist (new-card vcard)
                 (abook-set-card index new-card)
                 (add-to-list 'abook-modified-cards index)
+                ;; FIXME: update the summary buffer, if it exists
                 (setq index (1+ index)))
 	    (error "Vcard import failed!"))
 	;; Just to be sure, call save-cards
