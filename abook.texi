@@ -1,0 +1,140 @@
+\input texinfo
+@c %**start of header
+@setfilename abook.info
+@settitle Addressbook Manual
+
+@set VERSION 0.1
+@set DATE May 2007
+
+@dircategory Emacs
+@direntry
+* Addressbook: (addressbook).   Simple addressbook for Emacs
+@end direntry
+
+@c Version and Contact Info
+@set MAINTAINERSITE @uref{http://www.emacswiki.org/cgi-bin/wiki/AddressBook}
+@set AUTHOR Jose E. Marchesi
+@set MAINTAINER Jose E. Marchesi
+@set MAINTAINEREMAIL @email{jemarch at gnu dot org}
+@set MAINTAINERCONTACT @uref{mailto:jemarch at gnu dot org, contact the maintainer}
+@c %**end of header
+@finalout
+
+@copying
+This manual is for Addressbook (version @value{VERSION}).
+
+Copyright @copyright{} 2007 Jose E. Marchesi
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections.
+@end quotation
+@end copying
+
+@titlepage
+@title Addressbook Manual
+
+@subtitle Release @value{VERSION}
+@author by Jose E. Marchesi
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+
+@node Top, Summary, (dir), (dir)
+@top Addressbook Manual
+
+@insertcopying
+@end ifnottex
+
+@menu
+* Summary::                                     Brief summary of the addressbook
+* Getting the program::                         Downloading the addressbook               
+* Installation::                                How to install the adressbook
+* Configuration::               
+* Contacts::                                    The addressbook stores data about contacts
+* Accessing the addressbook::                   
+* Importing and exporting contact data::  
+@end menu
+
+@node Summary, Getting the program, Top, Top
+@section Summary
+
+AddressBook is a simple vCard based addressbook for Emacs.
+
+It is similar to the insidious big brother database, but instead of
+using a custom format for data storage, it uses the standard vCard
+format to maintain contacts data.
+
+@node Getting the program, Installation, Summary, Top
+@section Getting the program
+
+You need the following files in order to run the addressbook:
+
+@itemize @bullet
+@item
+addressbook.el
+@url{http://es.gnu.org/~jemarch/downloads/addrbook/addressbook.el}
+@item
+A modified version of Noah Friedman's vcard.el 
+@url{http://es.gnu.org/~jemarch/downloads/addrbook/vcard.el}
+@end itemize
+
+Note that since the addressbook is under heavy development and it has
+not released yet, those files may change (even several times in a
+day). You can use the CVS Id tag to determine if you are downloading a
+new version.
+   
+
+@node Installation, Configuration, Getting the program, Top
+@section Installation
+
+Make @file{abook.el} and @file{vcard.el} loadable to your emacs (put the
+files in a directory contained in your @code{load-path}).
+
+You can customize the addressbook using the customize interface. If
+you dont like to use customize, take a look into the sources for
+interesting variables.
+
+The most important variable to set is @code{abook-file}, that contain
+the file where you store your contacts (a collection of vCards). It
+defaults to @file{~/.abook}.
+
+@node Configuration, Contacts, Installation, Top
+@section Configuration
+
+@node Contacts, Accessing the addressbook, Configuration, Top
+@section Contacts
+
+The addressbook manages a collection of contact data.
+
+@node Accessing the addressbook, Importing and exporting contact data, Contacts, Top
+@section Accessing the addressbook
+
+There are several ways to access the addressbook:
+
+@itemize @bullet
+@item
+Opening the interactive interface calling the interactive function @code{abook}
+@item
+Inserting a new contact without open the interactive interface calling
+the interactive function @code{abook-create}
+@item
+Using the addressbook API (see FIXME:)
+@item
+From any other application that uses the addressbook API (such as a MUA).
+@end itemize
+
+Next sections of this manual discuss the interactive interface.
+
+@node Importing and exporting contact data,  , Accessing the addressbook, Top
+@section Importing and exporting contact data
+
+@bye

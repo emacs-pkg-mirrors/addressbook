@@ -18,7 +18,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-# $Id: Makefile,v 1.3 2009/03/05 14:02:49 jemarch Exp $
+# $Id: Makefile,v 1.4 2009/03/05 14:11:05 jemarch Exp $
 
 # make install
 # make all
@@ -36,7 +36,7 @@ DESTDIR=
 PREFIX=$(DESTDIR)/usr/local
 INFODIR=$(PREFIX)/info
 MAN1DIR=$(PREFIX)/share/man/man1
-SITELISP=$(PREFIX)/share/emacs/site-lisp/addressbook
+SITELISP=$(PREFIX)/share/emacs/site-lisp/abook
 
 INFODIR=$(PREFIX)/info
 
@@ -45,15 +45,15 @@ INSTALLINFO = /usr/sbin/install-info --info-dir=$(INFODIR)
 .PHONY: all install clean
 .PRECIOUS: %.elc %.info %.html
 
-all: $(TARGET) addressbook.info
+all: $(TARGET) abook.info
 
 install:
 	test -d $(SITELISP) || mkdir -p $(SITELISP)
 	[ -d $(INFODIR) ] || install -d $(INFODIR)
 	install -m 644 $(SOURCE) $(SITELISP)
 	install -m 644 $(COMPILED) $(SITELISP)
-	install -m 0644 addressbook.info $(INFODIR)/addressbook
-	$(INSTALLINFO) addressbook.info
+	install -m 0644 abook.info $(INFODIR)/abook
+	$(INSTALLINFO) abook.info
 
 %.elc: %.el
 	@echo "Byte compiling the source file "$<
@@ -68,7 +68,7 @@ install:
 	makeinfo --html --no-split $<
 
 remove-info:
-	$(INSTALLINFO) --remove addressbook.info
+	$(INSTALLINFO) --remove abook.info
 
 clean:
-	-rm -f *~ $(COMPILED) addressbook.info addressbook.html
+	-rm -f *~ $(COMPILED) abook.info abook.html

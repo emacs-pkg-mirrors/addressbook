@@ -1,5 +1,10 @@
 2009-03-05  Jose E. Marchesi  <jemarch@gnu.org>
 
+	* Makefile: Updated to use the new abook.* files.
+
+	* abook.texi: Generate abook.info instead of addressbook.info
+	addressbook -> abook.
+
 	* addressbook.el: Relicensed as GPLv3+.
 	Copyright notification updated.
 	(addrbook-file): Use ~/.abook as the standard file containing the
