@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.10 2009/03/05 20:58:31 jemarch Exp $
+;; $Id: abook.el,v 1.11 2009/04/16 14:50:35 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -98,11 +98,6 @@
 
 (defgroup abook-hooks nil
   "Addressbook hooks"
-  :group 'abook)
-
-(defcustom abook-directory "~/.contacts"
-  "Directory with stored vCards"
-  :type 'directory
   :group 'abook)
 
 (defcustom abook-display-images t
