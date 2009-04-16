@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.11 2009/04/16 14:50:35 jemarch Exp $
+;; $Id: abook.el,v 1.12 2009/04/16 14:51:46 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -131,7 +131,7 @@
 
 (defcustom abook-ask-for-search
   nil
-  "Whether the addressbook should ask for a search upon `addressbook' invocation"
+  "Whether the addressbook should ask for a search upon `abook' invocation"
   :type 'boolean
   :group 'abook)
 
