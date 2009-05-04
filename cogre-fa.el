@@ -24,7 +24,7 @@
  
 ;;; Commentary:
 ;;
-;; Provides Finite Automata support for COGRE.
+;; Provides Finite Automata edition for COGRE.
 
 (require 'cogre)
 (require 'cogre-mode)
