@@ -1,3 +1,7 @@
+2009-05-06  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el: Replace abook-create-vcard* with abook-create-contact-*
+
 2009-03-05  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el (abook-import-vcard): Import all the vcards found in

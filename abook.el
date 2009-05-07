@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.12 2009/04/16 14:51:46 jemarch Exp $
+;; $Id: abook.el,v 1.13 2009/05/07 14:08:39 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1404,7 +1404,7 @@ Commands:
       (interactive)
       (kill-all-local-variables)
       (setq abook-contact-mode-map (make-keymap))
-      (define-key abook-contact-mode-map "c" 'abook-create-card)
+      (define-key abook-contact-mode-map "c" 'abook-create-contact)
       (define-key abook-contact-mode-map "D" 'abook-delete-card)
       (define-key abook-contact-mode-map "n" 'abook-next-contact)
       (define-key abook-contact-mode-map "p" 'abook-previous-contact)
@@ -1575,7 +1575,7 @@ The format is as described in the variable `abook-summary-format'"
 (defun abook-summary-create-vcard ()
   ""
   (interactive)
-  (abook-create-vcard))
+  (abook-create-contact))
 
 (defun abook-summary-import-vcard (filename)
   "Import vCard from FILENAME and add it into our contact database and return the
@@ -1633,6 +1633,7 @@ Commands:
   (define-key abook-summary-mode-map "i" 'abook-summary-import-vcard)
   (define-key abook-summary-mode-map "x" 'abook-export-vcard)
   (define-key abook-summary-mode-map "m" 'abook-send-email)
+  (define-key abook-summary-mode-map "d" 'abook-summary-delete-contact)
   (use-local-map abook-summary-mode-map)
   (setq mode-name "ABook Summary")
   (setq major-mode 'abook-summary-mode))
@@ -1683,15 +1684,15 @@ Commands:
           (abook-quit)
         (abook-contact-display-card current-card)))))
 
-(defun abook-create-vcard ()
+(defun abook-create-contact ()
   "Create a new card"
   (interactive)
   (let ((buffer-read-only nil)
-        (new-card-index (abook-create-vcard-2)))
+        (new-card-index (abook-create-contact-2)))
     (if new-card-index
         (abook-contact-display-card new-card-index))))
 
-(defun abook-create-vcard-2 ()
+(defun abook-create-contact-2 ()
   "Create a new card with minimum identification properties and insert it
 into `abook-cards'.
 
@@ -1743,6 +1744,12 @@ index of the last imported card from the file."
 	;; Just to be sure, call save-cards
 	(abook-save-cards nil)))
     index))
+
+(defun abook-summary-delete-contact ()
+  "Delete the contact under point in the summary buffer."
+  (interactive)
+  (let ((abook-current-card (abook-summary-get-current-card)))
+    (abook-delete-card)))
 
 ;; FIXME: does not work in contact mode
 (defun abook-export-vcard ()
@@ -1997,7 +2004,7 @@ previous content."
 (defun abook-open ()
   "Open the addressbook"
   (or (abook-be-read-cards)
-      (abook-create-card-2)))
+      (abook-create-contact-2)))
 
 (defun abook-get-text-property-line (prop)
   "Return the value of text property PROP in the nearest position on current line
@@ -2286,7 +2293,7 @@ attributes."
   "Create a new contact into the addressbook and save it"
   (interactive)
   (abook-be-read-cards)
-  (let ((new-card-index (abook-create-card-2)))
+  (let ((new-card-index (abook-create-contact-2)))
     (if new-card-index
         (abook-save-cards nil))))
 
