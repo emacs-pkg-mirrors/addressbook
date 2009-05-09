@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.13 2009/05/07 14:08:39 jemarch Exp $
+;; $Id: abook.el,v 1.14 2009/05/09 00:50:30 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1461,7 +1461,10 @@ If `nil', do not show anything.")
     (when (not buffer)
       (setq buffer (abook-make-summary-buffer)))
     (switch-to-buffer-other-window abook-summary-buffer)
+    ;; The overlay set by the following function is not working when
+    ;; installed here... wtf???
     (abook-summary-goto-contact 0 t)))
+
 
 (defun abook-summarize ()
   "Summarize the contents of the addressbook in a summary buffer.
