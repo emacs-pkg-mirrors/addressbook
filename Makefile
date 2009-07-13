@@ -18,7 +18,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-# $Id: Makefile,v 1.4 2009/03/05 14:11:05 jemarch Exp $
+# $Id: Makefile,v 1.5 2009/07/13 18:33:33 jemarch Exp $
 
 # make install
 # make all
@@ -28,7 +28,9 @@ EMACS = emacs
 SITEFLAG=--no-site-file
 GZIP=gzip
 
-SOURCE=$(wildcard *.el)
+SOURCE = uuid.el \
+         vcard.el \
+         abook.el
 TARGET=$(patsubst %.el,%.elc,$(SOURCE))
 COMPILED=$(wildcard *.elc)
 
