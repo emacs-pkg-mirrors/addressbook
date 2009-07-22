@@ -1,3 +1,12 @@
+2009-07-22  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el (abook-summary-create-contact): Renamed from
+	'abook-summary-create-vcard'.
+	(abook-summary-mode): Use 'abook-summary-create-contact' and bind
+	it to the key 'c'.
+	(abook-summary-create-contact): Switch to the contact buffer
+	before to call 'abook-summary-create-contact'.
+
 2009-07-13  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* Makefile (SOURCE): Contents are now explicit.

@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.14 2009/05/09 00:50:30 jemarch Exp $
+;; $Id: abook.el,v 1.15 2009/07/22 20:00:58 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1483,6 +1483,7 @@ The format is as described in the variable `abook-summary-format'"
     (if abook-use-multiple-frames
         (switch-to-buffer-other-window buffer)
       (switch-to-buffer buffer))
+    (abook-summary-refresh)
     (abook-summary-goto-contact abook-current-card nil)))
 
 (defun abook-get-create-summary-buffer ()
@@ -1575,10 +1576,13 @@ The format is as described in the variable `abook-summary-format'"
      (t
       (abook-summary-goto-contact (- card-index 1) t)))))
 
-(defun abook-summary-create-vcard ()
+(defun abook-summary-create-contact ()
   ""
   (interactive)
-  (abook-create-contact))
+  (save-excursion
+    (set-buffer (get-buffer-create abook-contact-buffer-name))
+    (abook-create-contact))
+  (abook-summary-refresh))
 
 (defun abook-summary-import-vcard (filename)
   "Import vCard from FILENAME and add it into our contact database and return the
@@ -1632,7 +1636,7 @@ Commands:
   (define-key abook-summary-mode-map (kbd "RET") 'abook-summary-show-contact)
   (define-key abook-summary-mode-map "b" 'abook-bury)
   (define-key abook-summary-mode-map "q" 'abook-quit)
-  (define-key abook-summary-mode-map "a" 'abook-summary-create-vcard)
+  (define-key abook-summary-mode-map "c" 'abook-summary-create-contact)
   (define-key abook-summary-mode-map "i" 'abook-summary-import-vcard)
   (define-key abook-summary-mode-map "x" 'abook-export-vcard)
   (define-key abook-summary-mode-map "m" 'abook-send-email)
