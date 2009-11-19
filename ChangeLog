@@ -1,3 +1,8 @@
+2009-11-19  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el (abook-contact-display-attribute-regular): Spurious
+	blank lines removed.
+
 2009-07-22  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el (abook-summary-create-contact): Renamed from
