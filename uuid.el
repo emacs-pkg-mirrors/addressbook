@@ -1,17 +1,17 @@
 ;;;; uuid.el --- Universal Unique Identifiers
 
-;; Copyright (C) 2007 Jose E. Marchesi
+;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: standards
 
-;; $Id: uuid.el,v 1.4 2009/03/05 14:02:50 jemarch Exp $
+;; $Id: uuid.el,v 1.5 2009/11/24 17:10:25 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
+;; the Free Software Foundation; either version 3, or (at your option)
 ;; any later version.
 
 ;; This program is distributed in the hope that it will be useful,
@@ -57,7 +57,7 @@
 ;; time-based one.
 ;;
 ;; Note that, according to the ITU recommendation, uuid generators
-;; should generate lower-case letters in hexadecimal encoding. On the
+;; should produce lower-case letters in hexadecimal encoding. On the
 ;; other hand, it is recommended for uuid consumers to be
 ;; case-insensitive regarding alphabetic characters in hex
 ;; strings. This implementation follows both recommendations.
