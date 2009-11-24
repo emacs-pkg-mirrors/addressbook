@@ -1,14 +1,14 @@
 ;;; vcard.el --- vcard parsing routines
 
 ;; Copyright (C) 1997, 1999, 2000 Noah S. Friedman
-;; Copyright (C) 2007 Jose E. Marchesi
+;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Author: Noah Friedman <friedman@splode.com>
 ;; Maintainer: friedman@splode.com
 ;; Keywords: vcard, mail, news
 ;; Created: 1997-09-27
 
-;; $Id: vcard.el,v 1.5 2009/11/24 16:47:03 jemarch Exp $
+;; $Id: vcard.el,v 1.6 2009/11/24 17:04:32 jemarch Exp $
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
