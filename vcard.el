@@ -8,7 +8,7 @@
 ;; Keywords: vcard, mail, news
 ;; Created: 1997-09-27
 
-;; $Id: vcard.el,v 1.4 2009/03/05 14:02:50 jemarch Exp $
+;; $Id: vcard.el,v 1.5 2009/11/24 16:47:03 jemarch Exp $
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -115,24 +115,14 @@ the function `vcard-standard-filter' is supplied as the second argument to
 ;; `encoding' property.  If these are encountered while parsing, associate
 ;; them as parameters of the `encoding' property in the returned structure.
 (defvar vcard-encoding-tags
-  '("quoted-printable" "base64" "8bit" "7bit"))
+  '("quoted-printable" "base64" "8bit" "7bit" "b"))
 
 ;; The vcard parser will auto-decode these encodings when they are
 ;; encountered.  These methods are invoked via vcard-parse-region-value.
 (defvar vcard-region-decoder-methods
   '(("quoted-printable" . vcard-region-decode-quoted-printable)
-    ("base64"           . vcard-region-decode-base64)))
-
-;; This is used by vcard-region-decode-base64
-(defvar vcard-region-decode-base64-table
-  (let* ((a "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
-         (len (length a))
-         (tbl (make-vector 123 nil))
-         (i 0))
-    (while (< i len)
-      (aset tbl (vcard-char-to-int (aref a i)) i)
-      (setq i (1+ i)))
-    tbl))
+    ("base64"           . vcard-region-decode-base64)
+    ("b"                . vcard-region-decode-base64)))
 
 (defvar vcard-regexp-begin-vcard "^begin:[ \t]*vcard[ \t]*\n"
   "Regexp to match the begin of a vcard")
@@ -203,7 +193,6 @@ Note: this function modifies the buffer!"
         (while (re-search-forward "\r$\\|\n[ \t]" nil t)
           (goto-char (match-beginning 0))
           (delete-char 1))
-
         (goto-char (point-min))
         (while (re-search-forward vcard-regexp-begin-vcard nil t)
           (let ((vcard-data nil))
@@ -648,36 +637,7 @@ US domestic telephone numbers are replaced with international format."
             (replace-match (vcard-hexstring-to-ascii s) t t)))))))
 
 (defun vcard-region-decode-base64 (&optional beg end)
-  (save-restriction
-    (narrow-to-region (or beg (point-min)) (or end (point-max)))
-    (save-match-data
-      (goto-char (point-min))
-      (while (re-search-forward "[ \t\r\n]+" nil t)
-        (delete-region (match-beginning 0) (match-end 0))))
-    (goto-char (point-min))
-    (let ((count 0)
-          (n 0)
-          (c nil))
-      (while (not (eobp))
-        (setq c (char-after (point)))
-        (delete-char 1)
-        (cond ((char-equal c ?=)
-               (if (= count 2)
-                   (insert (lsh n -10))
-                 ;; count must be 3
-                 (insert (lsh n -16) (logand 255 (lsh n -8))))
-               (delete-region (point) (point-max)))
-              (t
-               (setq n (+ n (aref vcard-region-decode-base64-table
-                                  (vcard-char-to-int c))))
-               (setq count (1+ count))
-               (cond ((= count 4)
-                      (insert (logand 255 (lsh n -16))
-                              (logand 255 (lsh n -8))
-                              (logand 255 n))
-                      (setq n 0 count 0))
-                     (t
-                      (setq n (lsh n 6))))))))))
+  (base64-decode-region beg end))
 
 
 (defun vcard-split-string (string &optional separator limit)

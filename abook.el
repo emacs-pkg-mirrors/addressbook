@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.16 2009/11/19 18:54:26 jemarch Exp $
+;; $Id: abook.el,v 1.17 2009/11/24 16:47:03 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -849,7 +849,6 @@ When ressource is of type URL, we use url package to get the image data."
          (photo-value (car (vcard-attr-get-parameter attr "value")))
          (image-type nil)
          (image-data nil))
-    (abook-contact-display-attribute-regular attr-index)
     ;; Insert photo in buffer
     ;; Determine emacs image type
     (setq image-type
@@ -876,7 +875,7 @@ When ressource is of type URL, we use url package to get the image data."
 			       (delete-region (point-min) (point))
 			       (setq image-data (string-as-unibyte (buffer-string))))
 			   (kill-buffer image-buffer)))))
-	       attr-value)))
+	       (string-as-unibyte attr-value))))
 	;; Display the image
 	(save-excursion
 	  (goto-char (point-min))

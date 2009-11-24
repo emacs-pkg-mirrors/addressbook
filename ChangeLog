@@ -1,3 +1,12 @@
+2009-11-24  Jose E. Marchesi  <jco@terma.com>
+
+	* vcard.el (vcard-region-decoder-methods): Support the nonstandard
+	"b" encoding type.
+	(vcard-region-decode-base64): Use the emacs provided
+	`base64-decode-region' instead of the custom implementation.
+
+	* abook.el: Display of photograph fixed.
+
 2009-11-19  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el (abook-contact-display-attribute-regular): Spurious
