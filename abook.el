@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.19 2009/11/29 15:05:16 jemarch Exp $
+;; $Id: abook.el,v 1.20 2009/11/29 21:34:27 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1995,8 +1995,11 @@ that has PROP defined as a text property"
           ((and (not begin-pos) end-pos)
            (delete-region (point-min) end-pos)))))
 
-(defun abook-sort-cards ()
-  "Sort `abook-cards' using the `abook-field-for-sort' field"
+(defun abook-sort-cards (&optional field)
+  "Sort `abook-cards' using the `abook-field-for-sort' field.
+
+If FIELD is specified, then use it instead of
+`abook-field-for-sort'."
   (setq abook-cards
         (sort abook-cards
               (lambda (card1 card2)
@@ -2004,7 +2007,9 @@ that has PROP defined as a text property"
                        (card2-n (vcard-get-named-attribute card2 "n"))
                        (n-prop (abook-get-property "n"))
                        (n-fields (abook-get-prop-fields n-prop))
-                       (field-index (abook-get-prop-index n-fields abook-field-for-sort))
+                       (field-index (abook-get-prop-index n-fields (if field
+                                                                       field
+                                                                     abook-field-for-sort)))
                        (card1-n-field (nth field-index (vcard-attr-get-values card1-n)))
                        (card2-n-field (nth field-index (vcard-attr-get-values card2-n))))
                   (cond

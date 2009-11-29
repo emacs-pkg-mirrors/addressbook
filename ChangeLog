@@ -1,3 +1,7 @@
+2009-11-29  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el (abook-sort-cards): Accept an optional parameter FIELD.
+
 2009-11-24  Jose E. Marchesi  <jco@terma.com>
 
 	* vcard.el (vcard-region-decoder-methods): Support the nonstandard
