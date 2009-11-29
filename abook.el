@@ -1,11 +1,11 @@
-;;;; abook.el --- A simple addressbook
+;;; abook.el --- A simple addressbook
 
 ;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.17 2009/11/24 16:47:03 jemarch Exp $
+;; $Id: abook.el,v 1.18 2009/11/29 14:15:37 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -24,59 +24,12 @@
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
-;;;; Commentary:
+;;; Commentary:
 
 ;; A simple vCard based addressbook for Emacs
 ;;
-;; File Contents
-;; =============
-;;
-;; * Constants
-;; * Customization
-;; * Variables
-;;
-;; * Properties management functions
-;;
-;; ** Groups
-;; ** Properties
-;; ** Cards
-;; ** Attributes
-;;
-;; * Addressbook contact editor
-;;
-;; ** Constants
-;; ** Variables
-;; ** Contact buffer management
-;; ** Display functions
-;; ** Modeline management
-;; ** Commands
-;; ** Major mode
-;;
-;; * Addressbook summary
-;;
-;; ** Constants
-;; ** Variables
-;; ** Summary buffer management
-;; ** Display functions
-;; ** Commands
-;; ** Modeline management
-;; ** Major mode
-;;
-;; * General commands (usable from all addressbook modes)
-;; * Backend management
-;; 
-;; ** Customization and Variables
-;; ** Utility functions
-;; ** API
-;; ** Simple backend
-;; ** Multiple backend
-;;
-;; * Utility functions
-;;
-;; ** Fast selection
-;; ** Search functions
-;;
-;; * Entry points to the addressbook
+;; To see the structure of this file activate the outline minor mode
+;; and execute M-xhide-body
 
 ;;; Code:
 
@@ -84,12 +37,12 @@
 (require 'vcard)
 (require 'mm-decode)
 
-;;;; * Constants
+;; * Constants
 
 (defconst abook-version "0.1"
   "Version of the addressbook")
 
-;;;; * Customization
+;; * Customization
 
 (defgroup abook nil
   "Addressbook subsytem"
@@ -283,7 +236,7 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
   "Face for selected summary contact line"
   :group 'abook)
 
-;;;; * Variables
+;; * Variables
 
 (defvar abook-image-types
   '(("gif" nil)
@@ -464,9 +417,9 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
   '(("url" "value") ("content-id" "value"))
   "General vCard parameters")
 
-;;;; * Properties management functions
+;; * Properties management functions
 
-;;;; ** Groups
+;; ** Groups
 (defun abook-get-group (group-symbol)
   "Return the sexp containing information for GROUP"
   (assoc group-symbol abook-properties))
@@ -492,7 +445,7 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
           (setq result t)))
     result))
 
-;;;; ** Properties
+;; ** Properties
 
 (defun abook-get-group-prop (props prop-name)
   (assoc prop-name props))
@@ -566,7 +519,7 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
     (when prop-type
       (car (car prop-type)))))
 
-;;;; ** Cards
+;; ** Cards
 
 (defun abook-get-card (numcard)
   (nth numcard abook-cards))
@@ -649,7 +602,7 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
                            "(" name-aka ")")))
     result))
 
-;;;; ** Attributes
+;; ** Attributes
 
 (defun abook-delete-attr (attr-index attr-subindex)
   (let* ((card (abook-get-card abook-current-card))
@@ -702,14 +655,14 @@ where each field FIELD is defined with the following structure:
     (setcar (nthcdr 2 custom-group) props-data)))
 
 
-;;;; * Addressbook contact editor
+;; * Addressbook contact editor
 
-;;;; ** Constants
+;; ** Constants
 
 (defconst abook-contact-buffer-name "*ABook Contact*"
   "Name of the buffer for the addressbook contact editor")
 
-;;;; ** Variables
+;; ** Variables
 
 (defvar abook-contact-properties-nodisplay
   '("sound" "agent" "version" "uid" "label" "mailer" "uid"))
@@ -724,7 +677,7 @@ where each field FIELD is defined with the following structure:
   "String to display on the mode line when in the addressbook mode.
 If `nil', do not show anything.")
 
-;;;; ** Contact buffer management
+;; ** Contact buffer management
 
 (defun abook-create-contact-buffer ()
   "Create a new addressbook buffer to show contact information"
@@ -738,7 +691,7 @@ If `nil', do not show anything.")
         (switch-to-buffer-other-window buffer)
       (switch-to-buffer buffer))))
 
-;;;; ** Display functions
+;; ** Display functions
 
 (defun abook-contact-display-card (numcard)
   "Display the NUMCARD card into the addressbook buffer"
@@ -1089,7 +1042,7 @@ When ressource is of type URL, we use url package to get the image data."
 (defun abook-contact-photo-displayed-p ()
   (next-single-property-change (point-min) 'identification-photo))
 
-;;;; ** Commands
+;; ** Commands
 
 (defun abook-contact-add-attribute-type ()
   "Add a new type to the attribute under point"
@@ -1376,7 +1329,7 @@ When ressource is of type URL, we use url package to get the image data."
       (goto-char (point-min))
       (abook-contact-goto-next-group))))
 
-;;;; ** Modeline management
+;; ** Modeline management
 
 (defun abook-contact-set-mode-line (card-number total-cards)
   "Update the modeline of the current buffer"
@@ -1389,7 +1342,7 @@ When ressource is of type URL, we use url package to get the image data."
               (list 10
                     (format "%d/%d" card-number total-cards))))))
 
-;;;; ** Major mode
+;; ** Major mode
 (defun abook-contact-mode ()
       "A major mode for contact editing
 
@@ -1421,14 +1374,14 @@ Commands:
       (setq mode-name "ABook Contact")
       (setq major-mode 'abook-contact-mode))
 
-;;;; * Addressbook Summary
+;; * Addressbook Summary
 
-;;;; ** Constants
+;; ** Constants
 
 (defconst abook-summary-buffer-name "*ABook Summary*"
   "Name of the buffer for the addressbook summary")
 
-;;;; ** Variables
+;; ** Variables
 
 (defvar abook-summary-mode-map nil
   "Keymap for abook-summary-mode")
@@ -1437,7 +1390,7 @@ Commands:
   "String to display on the mode line when in the addressbook summary mode.
 If `nil', do not show anything.")
 
-;;;; ** Summary buffer management
+;; ** Summary buffer management
 
 (defun abook-make-summary-buffer ()
   (save-excursion
@@ -1489,7 +1442,7 @@ The format is as described in the variable `abook-summary-format'"
         (abook-summary-display)))
   abook-summary-buffer)
 
-;;;; ** Display functions
+;; ** Display functions
 
 (defun abook-summary-display ()
   (erase-buffer)
@@ -1548,7 +1501,7 @@ The format is as described in the variable `abook-summary-format'"
     (abook-summary-goto-contact card-index t)
     (goto-char (+ (line-beginning-position) column-backup))))
 
-;;;; ** Commands
+;; ** Commands
 
 (defun abook-summary-next-contact ()
   "Select the next card in the summary buffer"
@@ -1613,7 +1566,7 @@ index of the last imported card from the file."
 		(list 10
 		      (format "%d/%d" card-number total-cards))))))
 
-;;;; ** Major mode
+;; ** Major mode
 
 (defun abook-summary-mode ()
   "A major mode for the addressbook summary window
@@ -1639,8 +1592,8 @@ Commands:
   (setq mode-name "ABook Summary")
   (setq major-mode 'abook-summary-mode))
 
-;;;; * General commands (usable from all addressbook modes)
-
+;; * General commands (usable from all addressbook modes)
+1
 (defun abook-send-email ()
   "Send an email to current contact"
   (interactive)
@@ -1877,9 +1830,9 @@ If optional VCARD parameter is not set, use `abook-current-card'."
       (vcard-insert card))
     (message "vCard exported")))
 
-;;;; * Backend management
+;; * Backend management
 
-;;;; ** Customization and Variables
+;; ** Customization and Variables
 
 (defcustom abook-backend
   'abook-backend-simple
@@ -1890,7 +1843,7 @@ to store all contacts in one file) and `abook-backend-multiple' (that stores one
 a given directory"
   :type 'symbol)
 
-;;;; ** Utility functions
+;; ** Utility functions
 
 (defun abook-make-params-explicit ()
   "Make unambiguous anonymous params explicit.
@@ -1929,7 +1882,7 @@ defined in `abook-properties'"
                     (if param-name
                         (setcar (nthcdr j attr-props) (cons param-name param-value))))))))))))
 
-;;;; ** API
+;; ** API
 
 (defun abook-be-read-cards ()
   "Read cards from an addressbook backend.
@@ -1967,7 +1920,7 @@ This function stores the retrieved vCard information in
    (t
     (error "No valid addressbook backend selected."))))
   
-;;;; ** Simple backend
+;; ** Simple backend
 
 (defcustom abook-file "~/.abook"
   "File with stored addresses"
@@ -1991,7 +1944,7 @@ previous content."
         (if (not (equal i (- (length abook-cards) 1)))
             (insert "\n\n"))))))
 
-;;;; * Utility functions
+;; * Utility functions
 
 (defun abook-list-to-csv (list)
   (let ((result "")
@@ -2063,7 +2016,7 @@ that has PROP defined as a text property"
                    (t
                     (string-lessp card1-n-field card2-n-field))))))))
 
-;;;; * Fast selection
+;; * Fast selection
 
 (defun abook-fast-selection (names prompt)
   "Fast group tag selection with single keys.
@@ -2222,7 +2175,7 @@ Each character should identify only one name."
           (setq result i)))
     result))
 
-;;;; ** Search functions
+;; ** Search functions
 
 (defun abook-attr-matches-p (attr regexp)
   (let (result value
@@ -2252,7 +2205,7 @@ attributes."
             (add-to-list 'result card-index))))
     (reverse result)))
 
-;;;; * Entry points to the addressbook
+;; * Entry points to the addressbook
 
 ;;;###autoload
 (defun abook ()
@@ -2300,5 +2253,9 @@ attributes."
 
 
 (provide 'abook)
+
+;; Local variables:
+;; outline-regexp: ";; \\*"
+;; End:
 
 ;;; abook.el ends here

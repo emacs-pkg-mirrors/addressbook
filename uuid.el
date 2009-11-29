@@ -1,11 +1,11 @@
-;;;; uuid.el --- Universal Unique Identifiers
+;;; uuid.el --- Universal Unique Identifiers
 
 ;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: standards
 
-;; $Id: uuid.el,v 1.5 2009/11/24 17:10:25 jemarch Exp $
+;; $Id: uuid.el,v 1.6 2009/11/29 14:15:37 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -24,7 +24,7 @@
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
-;;;; Commentary
+;;; Commentary
 
 ;; This file contain an implementation of the ITU X.667 Recommendation
 ;; for the generation of Universal Unique Identifiers (also known as
@@ -62,7 +62,7 @@
 ;; case-insensitive regarding alphabetic characters in hex
 ;; strings. This implementation follows both recommendations.
 
-;;;; Code:
+;;; Code:
 
 (require 'calc)
 
