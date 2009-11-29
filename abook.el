@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.18 2009/11/29 14:15:37 jemarch Exp $
+;; $Id: abook.el,v 1.19 2009/11/29 15:05:16 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1450,10 +1450,11 @@ The format is as described in the variable `abook-summary-format'"
     (dotimes (card-index (length abook-cards))
       (insert "  ")
       (insert " ")
+      (insert (make-string (- 4 (length (number-to-string (+ card-index 1)))) ?\ ))
       (insert (propertize (number-to-string (+ card-index 1))
                           'face 'abook-summary-card-number)
               " ")
-      (insert (make-string (- 4 (length (number-to-string card-index))) ?\ ))
+      (insert " ")
       (setq card (abook-get-card card-index))
       (setq name (vcard-get-named-attribute card "n"))
       (insert (propertize (abook-get-card-fn t card-index)
