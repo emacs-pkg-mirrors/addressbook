@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.20 2009/11/29 21:34:27 jemarch Exp $
+;; $Id: abook.el,v 1.21 2009/12/01 16:16:17 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -239,15 +239,15 @@ It may be \"Surname\", \"First Name\", \"AKA\", \"Name prefix\" or \"Name suffix
 ;; * Variables
 
 (defvar abook-image-types
-  '(("gif" nil)
+  '(("gif" gif)
     ("cgm" nil)
     ("wmf" nil)
-    ("bmp" nil)
+    ("bmp" bmp)
     ("met" nil)
     ("pbm" pbm)
     ("dib" nil)
     ("pict" nil)
-    ("tiff" nil)
+    ("tiff" tiff)
     ("pdf" nil)
     ("ps" postscript)
     ("jpeg" jpeg)
