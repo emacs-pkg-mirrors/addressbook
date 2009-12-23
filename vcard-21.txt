@@ -235,22 +235,100 @@ WAN: Wide-Area Network
 
 
 Section 2 : vCard Specificiation
-[DS3]		
+
 This section defines the semantics and syntax for the vCard.
-A vCard is a collection of one or more properties. A property is a uniquely named value. A set of properties can be grouped within a vCard. For example, the properties for a telephone number and comment can be grouped in order to preserve the coupling of the annotation with the telephone number. In addition to property groupings, a vC. versit  is developing a comprehensive family of PDI technologies based on open specifications and interoperability agreements to help meet this technology need.
+
+A vCard is a collection of one or more properties. A property is a
+uniquely named value. A set of properties can be grouped within a
+vCard. For example, the properties for a telephone number and comment
+can be grouped in order to preserve the coupling of the annotation
+with the telephone number. In addition to property groupings, a
+vC. versit  is developing a comprehensive family of PDI technologies
+based on open specifications and interoperability agreements to help
+meet this technology need.
+
 Overview
-This specification defines a format for an electronic business card, or vCard. The format is suitable as an interchange format between applications or systems. The format is defined independent of the particular method used to transport it. The transport for this exchange might be a file system, point-to-point asynchronous communication, wired-network transport, or some form of unwired transport.
-A vCard is a data stream consisting of one or more vCard objects. The individual vCard definitions can be identified and parsed within the datastream. The vCard data stream may exist as a persistent form in a file system, document management system, network connection between two network endpoints, or in any other digital transport that has an abstraction of a stream of bytes.
-Conceptually, a vCard Writer creates vCard data streams and a vCard Reader interprets vCard data streams. The vCard Reader and Writer may be implemented as a single application or as separate applications. It is not the intent of this specification to define the implementation of these processes beyond some fundamental capabilities related to the format of the vCard data stream and a common set of conformance requirements .
-This specification provides for a clear-text encoding that is intended to be based on the syntax used by the MIME specification (RFC 1521).
-The encoding of this specification can be used in environments which are constrained to 7-bit transfer encodings, short line lengths, and low bandwidth. In addition, the encoding is simple in order to facilitate the implementation of reader and writer applications on small platforms, such as Personal Digital Assistants (PDA), cellular telephones, or alphanumeric pagers.
+
+This specification defines a format for an electronic business card,
+or vCard. The format is suitable as an interchange format between
+applications or systems. The format is defined independent of the
+particular method used to transport it. The transport for this
+exchange might be a file system, point-to-point asynchronous
+communication, wired-network transport, or some form of unwired
+transport.
+
+A vCard is a data stream consisting of one or more vCard objects. The
+individual vCard definitions can be identified and parsed within the
+datastream. The vCard data stream may exist as a persistent form in a
+file system, document management system, network connection between
+two network endpoints, or in any other digital transport that has an
+abstraction of a stream of bytes.
+
+Conceptually, a vCard Writer creates vCard data streams and a vCard
+Reader interprets vCard data streams. The vCard Reader and Writer may
+be implemented as a single application or as separate applications. It
+is not the intent of this specification to define the implementation
+of these processes beyond some fundamental capabilities related to the
+format of the vCard data stream and a common set of conformance
+requirements .
+
+This specification provides for a clear-text encoding that is intended
+to be based on the syntax used by the MIME specification (RFC 1521).
+
+The encoding of this specification can be used in environments which
+are constrained to 7-bit transfer encodings, short line lengths, and
+low bandwidth. In addition, the encoding is simple in order to
+facilitate the implementation of reader and writer applications on
+small platforms, such as Personal Digital Assistants (PDA), cellular
+telephones, or alphanumeric pagers.
+
 Scope
-The vCard is intended to be used for exchanging information about people and resources. In today's business environment, this information is typically exchanged on business cards. It is appropriate, then that this specification define this information in terms of a paradigm based on an electronic business card object.
-The ultimate destination for this information is often a collection of business cards, Rolodex® file, or electronic contact manager. Prior to the introduction of the vCard specification, users of such applications typically had to re-key the original information, often transcribing it from paper business cards. With the advent of the vCard specification, this information can be exchanged in an automated fashion.
-The basis for the data types supported by this specification have their origin in openly defined, international standards and in additional capabilities based on enhancements suggested by the demonstration of the exchange of prototypical vCards using the Internet based World-Wide-Web, Infra-red data transport, and simultaneous voice and data (SVD) modems.
-The "person" object defined by the CCITT X.500 Series Recommendation for Directory Services was the primary reference for the properties that are defined by this specification. Every attempt was made to make it possible to map the X.520/X.521 attributes and objects into and out of an instance of a vCard. The vCard specification has extended the capabilities that have been defined within the CCITT X.500 Series Recommendation to allow the exchange of additional information often recorded on business cards and electronic contact managers. For example, this specification provides support for exchanging graphic images representing company logos, photographs of individuals, geo-positioning information, and other extensions to properties defined by the X.500 Recommendation.
-The specification of all date and time values are defined in terms of the ISO 8601 standard for representation of dates and times. ISO 8601 supersedes all other international standards defined at the time this specification was drafted.
-The paradigm of an electronic business card is related to the concepts of aQuoted-Printable lines of text must also be limited to less than 76 characters. The 76 characters does not include the CRLF (RFC 822) line break sequence. For example a multiple line LABEL property value of:
+
+The vCard is intended to be used for exchanging information about
+people and resources. In today's business environment, this
+information is typically exchanged on business cards. It is
+appropriate, then that this specification define this information in
+terms of a paradigm based on an electronic business card object.
+
+The ultimate destination for this information is often a collection of
+business cards, Rolodex® file, or electronic contact manager. Prior to
+the introduction of the vCard specification, users of such
+applications typically had to re-key the original information, often
+transcribing it from paper business cards. With the advent of the
+vCard specification, this information can be exchanged in an automated
+fashion.
+
+The basis for the data types supported by this specification have
+their origin in openly defined, international standards and in
+additional capabilities based on enhancements suggested by the
+demonstration of the exchange of prototypical vCards using the
+Internet based World-Wide-Web, Infra-red data transport, and
+simultaneous voice and data (SVD) modems.
+
+The "person" object defined by the CCITT X.500 Series Recommendation
+for Directory Services was the primary reference for the properties
+that are defined by this specification. Every attempt was made to make
+it possible to map the X.520/X.521 attributes and objects into and out
+of an instance of a vCard. The vCard specification has extended the
+capabilities that have been defined within the CCITT X.500 Series
+Recommendation to allow the exchange of additional information often
+recorded on business cards and electronic contact managers. For
+example, this specification provides support for exchanging graphic
+images representing company logos, photographs of individuals,
+geo-positioning information, and other extensions to properties
+defined by the X.500 Recommendation.
+
+The specification of all date and time values are defined in terms of
+the ISO 8601 standard for representation of dates and times. ISO 8601
+supersedes all other international standards defined at the time this
+specification was drafted.
+
+The paradigm of an electronic business card is related to the concepts
+of aQuoted-Printable lines of text must also be limited to less than
+76 characters. The 76 characters does not include the CRLF (RFC 822)
+line break sequence. For example a multiple line LABEL property value
+of:
+
 123 Winding Way
 Any Town, CA 12345
 USA
@@ -258,19 +336,58 @@ Would be represented in a Quoted-Printable encoding as:
 LABEL;ENCODING=QUOTED-PRINTABLE:123 Winding Way=0D=0A=
   Any Town, CA 12345=0D=0A=
   USA
-Property parameter substrings are delimited by a field delimiter, specified by the Semi-colon character (ASCII decimal 59). A Semi-colon in a property parameter value must be escaped with a Backslash character (ASCII 92).
-Compound property values are property values that also make use of the Semi-colon, field delimiter to separate positional components of the value. For example, the Name property is made up of the Family Name, Given Name, etc. components. A Semi-colon in a component of a compound property value must be escaped with a Backslash character (ASCII 92).
+
+Property parameter substrings are delimited by a field delimiter,
+specified by the Semi-colon character (ASCII decimal 59). A Semi-colon
+in a property parameter value must be escaped with a Backslash
+character (ASCII 92).
+
+Compound property values are property values that also make use of the
+Semi-colon, field delimiter to separate positional components of the
+value. For example, the Name property is made up of the Family Name,
+Given Name, etc. components. A Semi-colon in a component of a compound
+property value must be escaped with a Backslash character (ASCII 92).
+
 Grouping
-There are two forms of grouping or collections supported within the vCard. A collection of vCard objects can be grouped and a collection of properties within an individual vCard can be grouped.
+
+There are two forms of grouping or collections supported within the
+vCard. A collection of vCard objects can be grouped and a collection
+of properties within an individual vCard can be grouped.
+
 vCard Grouping
-The vCard data stream can consist of multiple vCard objects. The vCard data stream can, sequentially, contain one or more vCard objects.,  In addition, the vCard data stream can contain a property whose value is a nested vCard. In both of these cases, each vCard object will be delimited by the vCard Delimiters. The vCard Reader conforming to this specification must be able to parse and process any of these combinations of vCard Groupings. The support for vCard Grouping is optional for a vCard Writer conforming to this specification.
+
+The vCard data stream can consist of multiple vCard objects. The vCard
+data stream can, sequentially, contain one or more vCard objects., In
+addition, the vCard data stream can contain a property whose value is
+a nested vCard. In both of these cases, each vCard object will be
+delimited by the vCard Delimiters. The vCard Reader conforming to this
+specification must be able to parse and process any of these
+combinations of vCard Groupings. The support for vCard Grouping is
+optional for a vCard Writer conforming to this specification.
+
 Property Grouping
-A Property Grouping is the definition of a method for specifying a collection of related properties within a vCard object. There is no requirement on a vCard reader that it preserve the property group name. However, the vCard reader is required to preserve the grouping of the properties.
-The Property Grouping is identified by a character string prefix to the property name; separated by the Period character (ASCII decimal 46).
-The grouping of a comment property with a telephone property is shown in the following example:
+
+A Property Grouping is the definition of a method for specifying a
+collection of related properties within a vCard object. There is no
+requirement on a vCard reader that it preserve the property group
+name. However, the vCard reader is required to preserve the grouping
+of the properties.
+
+The Property Grouping is identified by a character string prefix to
+the property name; separated by the Period character (ASCII decimal
+46).
+
+The grouping of a comment property with a telephone property is shown
+in the following example:
+
 A.TEL;HOME:+1-213-555-1234
 A.NOTE:This is my vacation home.
-The vCard Reader conforming to this specification must be able to parse and process the property grouping. The support for Property Grouping is optional for a vCard Writer conforming to this specification.
+
+The vCard Reader conforming to this specification must be able to
+parse and process the property grouping. The support for Property
+Grouping is optional for a vCard Writer conforming to this
+specification.
+
 
 Encodings
 

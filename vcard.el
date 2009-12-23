@@ -4,11 +4,11 @@
 ;; Copyright (C) 2007, 2008, 2009 Jose E. Marchesi
 
 ;; Author: Noah Friedman <friedman@splode.com>
-;; Maintainer: friedman@splode.com
+;; Maintainer: jemarch@gnu.org
 ;; Keywords: vcard, mail, news
 ;; Created: 1997-09-27
 
-;; $Id: vcard.el,v 1.8 2009/11/29 15:05:17 jemarch Exp $
+;; $Id: vcard.el,v 1.9 2009/12/23 15:31:40 jemarch Exp $
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -647,6 +647,11 @@ US domestic telephone numbers are replaced with international format."
             (replace-match (vcard-hexstring-to-ascii s) t t)))))))
 
 (defun vcard-region-decode-base64 (beg end)
+  (goto-char beg)
+  (while (re-search-forward " +" end t)
+    (replace-match "\n"))
+  (when (> (point) end)
+    (setq end (point)))
   (base64-decode-region beg end))
 
 (defun vcard-split-string (string &optional separator limit)
