@@ -1,3 +1,7 @@
+2009-12-23  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* abook.el (abook-summary-select-contact): New function.
+
 2009-11-29  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* abook.el (abook-sort-cards): Accept an optional parameter FIELD.
