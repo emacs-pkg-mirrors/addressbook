@@ -5,7 +5,7 @@
 ;; Maintainer: Jose E. Marchesi
 ;; Keywords: contacts, applications
 
-;; $Id: abook.el,v 1.22 2009/12/23 13:13:40 jemarch Exp $
+;; $Id: abook.el,v 1.23 2009/12/23 13:24:20 jemarch Exp $
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -1597,6 +1597,7 @@ Commands:
   (define-key abook-summary-mode-map "x" 'abook-export-vcard)
   (define-key abook-summary-mode-map "m" 'abook-send-email)
   (define-key abook-summary-mode-map "d" 'abook-summary-delete-contact)
+  (define-key abook-summary-mode-map "s" 'abook-summary-save-cards)
   (use-local-map abook-summary-mode-map)
   (setq mode-name "ABook Summary")
   (setq major-mode 'abook-summary-mode))
@@ -1713,6 +1714,11 @@ index of the last imported card from the file."
   (interactive)
   (let ((abook-current-card (abook-summary-get-current-card)))
     (abook-delete-card)))
+
+(defun abook-summary-save-cards ()
+  "Save the cards to disk."
+  (interactive)
+  (abook-save-cards nil))
 
 ;; FIXME: does not work in contact mode
 (defun abook-export-vcard ()
